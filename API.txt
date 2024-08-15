@@ -1,0 +1,28 @@
+G3Lua API info:
+Hooks:
+	G3Lua uses a basic hooking system to allow you to edit any function in the engine and 
+	run your own code. To make a hook you need to run the function "hooks:Add()" with the
+	first parameter being a custom name for the hook, this is used when you want to delete a hook.
+	The next parameter needed is the hook type, the current list of hook types are as follows:
+	- "Engine_LoadResources"
+	- "Engine_Render"
+	The final parameter is the function to be used. Some hooks may have their own arguments they pass
+	to the function you provide, so your function may need to accept arguments.
+
+Functions:
+	game:OpenTexture(<string>):	This function loads a texture into the GPU's VRAM. It returns an integer
+					that can be passed to the next function
+
+	game:UseTexture(<integer>): 	This function allows a texture ID passed from game:OpenTexture to be bound
+				    	to a primitive shape. (Rects and maybe more at some point)
+
+	SetDrawColour(<float>, <float>, <float>):  This function changes the colour that the next draw calls use.
+
+	DrawBasicRect(<int>, <int>, <int>, <int>): This draws a very basic rectangle. The 3rd and 4th
+						   arguments are width and height, which get added to
+						   the first and second args which are x and y coords.
+
+	DrawTriangle(<float>, <float>,
+		     <float>, <float>,
+		     <float>, <float>):	This function draws a triangle, taking in 3 sets of x,y coordinates.
+										Works the same as the DrawBasicRect function

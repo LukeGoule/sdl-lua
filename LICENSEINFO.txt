@@ -1,0 +1,5 @@
+Information on licenses can be found here.
+
+SDL: https://www.libsdl.org/license.php
+
+Lua: https://www.lua.org/license.html
