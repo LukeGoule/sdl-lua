@@ -28,8 +28,20 @@
     <Filter Include="g3Lua">
       <UniqueIdentifier>{3de0c5c3-5a33-4c25-8920-4da38ca962e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="g3Lua\Modules">
-      <UniqueIdentifier>{9dff2fae-cf2d-42a5-a767-e50f0ad649d8}</UniqueIdentifier>
+    <Filter Include="Header Files\Engine\Lua">
+      <UniqueIdentifier>{4db503ec-1239-4c58-ba11-0798a114443a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Lua">
+      <UniqueIdentifier>{a1b5d004-f37a-443f-84a9-51d057080514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{ea0399d8-7cd7-406c-a642-bb29098f046c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Lua\Functions">
+      <UniqueIdentifier>{5d336bf0-0622-4b96-abcc-6a4e60d21784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Lua\Functions">
+      <UniqueIdentifier>{f24878eb-555e-4353-9895-81d0c860370d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +159,39 @@
     <ClCompile Include="Keyboard.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="EAtan2.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ECheckKey.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ELaunchWindow.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ESetDrawColour.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ELoadTexture.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="EDrawTriangle.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="EDrawRect.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="EBindTexture.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ESetFullscreen.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="EGetMousePosition.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="EError.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -233,25 +278,73 @@
     <ClInclude Include="Keyboard.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="BaseLuaFunction.h">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ECheckKey.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EAtan2.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EError.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EGetMousePosition.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="ESetFullscreen.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EBindTexture.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EDrawRect.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EDrawTriangle.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="ELoadTexture.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="ESetDrawColour.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="ESetupWindow.h">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Debug\lua\g3Lua_v1.lua">
+    <None Include="..\.gitattributes" />
+    <None Include="..\.gitignore" />
+    <None Include="..\Debug\lua_base\g3Lua_v1.lua">
       <Filter>g3Lua</Filter>
     </None>
-    <None Include="..\Debug\lua\hooks.lua">
-      <Filter>g3Lua\Modules</Filter>
-    </None>
-    <None Include="..\Debug\lua\render.lua">
-      <Filter>g3Lua\Modules</Filter>
-    </None>
-    <None Include="..\Debug\lua\main.lua">
+    <None Include="..\Debug\lua_base\game.lua">
       <Filter>g3Lua</Filter>
     </None>
-    <None Include="..\Debug\lua\game.lua">
-      <Filter>g3Lua\Modules</Filter>
+    <None Include="..\Debug\lua_base\hooks.lua">
+      <Filter>g3Lua</Filter>
     </None>
-    <None Include="..\Debug\lua\sdlk.lua">
-      <Filter>g3Lua\Modules</Filter>
+    <None Include="..\Debug\lua_base\main - particles.lua">
+      <Filter>g3Lua</Filter>
     </None>
+    <None Include="..\Debug\lua_base\main.lua">
+      <Filter>g3Lua</Filter>
+    </None>
+    <None Include="..\Debug\lua_base\render.lua">
+      <Filter>g3Lua</Filter>
+    </None>
+    <None Include="..\Debug\lua_base\sdlk.lua">
+      <Filter>g3Lua</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\API.txt" />
+    <Text Include="..\LICENSEINFO.txt" />
   </ItemGroup>
 </Project>

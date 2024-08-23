@@ -15,31 +15,18 @@ It could be non-static, but Lua bindings would not look good.
 class Engine {
 public:
 	// Core engine variables
-	static lua_State*		L;
-	static SDL_Window*		pWin;
-	static SDL_GLContext	Context;
-	static G3Keyboard*		m_keyboard;
-	static bool				bShouldContinue;
-	static int				iFullscreenMode;
+	lua_State*		L					= nullptr;
+	SDL_Window*		pWin				= nullptr;
+	SDL_GLContext	Context				= NULL;
+	G3Keyboard*		m_keyboard			= nullptr;
+	bool			bShouldContinue		= true;
+	int				iFullscreenMode		= 0;
 
 	// SDL & setup stuffs
-	static void Init();
-	static void Setup();
-	static void LoadScript(std::string script);
+	void Init();
+	void LoadScript(std::string script);
 
 	// Error handling functions
-	static void Error(std::string err);
-	static void LuaError(std::string trace);
-	
-	// Lua bindings.
-	static int	SetupWindow(lua_State* L);
-	static int	RenderBinding(lua_State* L);
-	static int	SetDrawColour(lua_State* L);
-	static int	DrawRect(lua_State* L);
-	static int	DrawTriangle(lua_State* L);
-	static int	LoadTexture(lua_State* L);
-	static int	BindTexture(lua_State* L);
-	static int	SetFullscreen(lua_State* L);
-	static int	GetMousePosition(lua_State* L);
-	static int  Lua_CauseError(lua_State* L);
+	void Error(std::string err);
+	void LuaError(std::string trace);
 };

@@ -17,10 +17,16 @@
 mono_crash.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
+[Dd]ebug/**.exe
+[Dd]ebug/**.dll
+[Dd]ebug/**.idb
+[Dd]ebug/**.pdb
+
+[Rr]elease/**.exe
+[Rr]elease/**.dll
+[Rr]elease/**.idb
+[Rr]elease/**.pdb
+
 x64/
 x86/
 [Ww][Ii][Nn]32/
@@ -401,3 +407,4 @@ FodyWeavers.xsd
 SDL/
 GLM/
 GLEW/
+gam3_v1/Debug/vc141.idb

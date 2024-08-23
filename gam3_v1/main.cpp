@@ -5,10 +5,10 @@
 
 #undef main
 int main(int argc, char** argv) {
-
-	Engine::Init();
-
-	Engine::LoadScript("lua/main.lua");
+	
+	const auto e = new Engine;
+	e->Init();
+	e->LoadScript("lua_base/main.lua");
 
 #ifdef _DEBUG
 	getchar();

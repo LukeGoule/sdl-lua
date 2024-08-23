@@ -157,7 +157,18 @@
     <ClCompile Include="..\Lua\lutf8lib.c" />
     <ClCompile Include="..\Lua\lvm.c" />
     <ClCompile Include="..\Lua\lzio.c" />
+    <ClCompile Include="EAtan2.cpp" />
+    <ClCompile Include="EBindTexture.cpp" />
+    <ClCompile Include="ECheckKey.cpp" />
+    <ClCompile Include="EDrawRect.cpp" />
+    <ClCompile Include="EDrawTriangle.cpp" />
+    <ClCompile Include="EError.cpp" />
+    <ClCompile Include="EGetMousePosition.cpp" />
+    <ClCompile Include="ELaunchWindow.cpp" />
+    <ClCompile Include="ELoadTexture.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="ESetDrawColour.cpp" />
+    <ClCompile Include="ESetFullscreen.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -188,16 +199,36 @@
     <ClInclude Include="..\Lua\lundump.h" />
     <ClInclude Include="..\Lua\lvm.h" />
     <ClInclude Include="..\Lua\lzio.h" />
+    <ClInclude Include="EAtan2.h" />
+    <ClInclude Include="EBindTexture.h" />
+    <ClInclude Include="ECheckKey.h" />
+    <ClInclude Include="EDrawRect.h" />
+    <ClInclude Include="EDrawTriangle.h" />
+    <ClInclude Include="EError.h" />
+    <ClInclude Include="EGetMousePosition.h" />
+    <ClInclude Include="ELoadTexture.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="ESetDrawColour.h" />
+    <ClInclude Include="ESetFullscreen.h" />
+    <ClInclude Include="ESetupWindow.h" />
     <ClInclude Include="Keyboard.hpp" />
+    <ClInclude Include="BaseLuaFunction.h" />
+    <ClInclude Include="Singleton.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Debug\lua\g3Lua_v1.lua" />
-    <None Include="..\Debug\lua\game.lua" />
-    <None Include="..\Debug\lua\hooks.lua" />
-    <None Include="..\Debug\lua\main.lua" />
-    <None Include="..\Debug\lua\render.lua" />
-    <None Include="..\Debug\lua\sdlk.lua" />
+    <None Include="..\.gitattributes" />
+    <None Include="..\.gitignore" />
+    <None Include="..\Debug\lua_base\g3Lua_v1.lua" />
+    <None Include="..\Debug\lua_base\game.lua" />
+    <None Include="..\Debug\lua_base\hooks.lua" />
+    <None Include="..\Debug\lua_base\main - particles.lua" />
+    <None Include="..\Debug\lua_base\main.lua" />
+    <None Include="..\Debug\lua_base\render.lua" />
+    <None Include="..\Debug\lua_base\sdlk.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\API.txt" />
+    <Text Include="..\LICENSEINFO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
