@@ -6,27 +6,24 @@
 #include <SDL.h>
 #include <glew.h>
 
-#include "Keyboard.hpp"
+#include "Keyboard.h"
+#include "Render.h"
 
-/*
-This fully static class is used to hold all of the needed data in a neat, formatted way.
-It could be non-static, but Lua bindings would not look good.
-*/
 class Engine {
+private:
+	lua_State* m_lua_state = nullptr;
+	Keyboard* m_keyboard = nullptr;
+	Render* m_render = nullptr;
 public:
-	// Core engine variables
-	lua_State*		L					= nullptr;
-	SDL_Window*		pWin				= nullptr;
-	SDL_GLContext	Context				= NULL;
-	G3Keyboard*		m_keyboard			= nullptr;
-	bool			bShouldContinue		= true;
-	int				iFullscreenMode		= 0;
+	lua_State* getLua();
+	Keyboard* getKeyboard();
+	Render* getRender();
 
 	// SDL & setup stuffs
-	void Init();
-	void LoadScript(std::string script);
+	Engine* Init();
+	Engine* LoadScript(std::string script);
 
 	// Error handling functions
-	void Error(std::string err);
-	void LuaError(std::string trace);
+	Engine* Error(std::string err);
+	Engine* LuaError(std::string trace);
 };

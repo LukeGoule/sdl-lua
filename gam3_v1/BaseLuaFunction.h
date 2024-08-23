@@ -11,7 +11,6 @@
 template <typename T>
 class BaseLuaFunction {
 public:
-
 	Engine* m_engine = nullptr;
 
 	// Deleted copy constructor and assignment operator to prevent copying
@@ -34,8 +33,8 @@ public:
 	static void luaRegister(Engine* instance) {
 		T::getInstance().m_engine = instance;
 
-		lua_pushcfunction(instance->L, T::luaHandle);
-		lua_setglobal(instance->L, T::getInstance().getName().c_str());
+		lua_pushcfunction(instance->getLua(), T::luaHandle);
+		lua_setglobal(instance->getLua(), T::getInstance().getName().c_str());
 	}
 
 protected:

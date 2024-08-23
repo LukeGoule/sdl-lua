@@ -12,7 +12,7 @@ Thanks to: http://www.sdltutorials.com/sdl-tip-sdl-surface-to-opengl-texture
 */
 int ELoadTexture::handle(lua_State* L) {
 	if (lua_gettop(L) != 1) {
-		this->m_engine->Error("LoadTexture requires 1 argument.");
+		this->m_engine->Error("E_LoadTexture requires 1 argument.");
 		return 1;
 	}
 

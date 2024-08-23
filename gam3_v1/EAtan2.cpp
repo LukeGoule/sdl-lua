@@ -5,10 +5,14 @@ std::string EAtan2::getName() {
 }
 
 int EAtan2::handle( lua_State *L ) {
-	double y = lua_tonumber(L, 1);
-	double x = lua_tonumber(L, 2);
+	if (lua_gettop(L) != 1) {
+		this->m_engine->Error("E_Atan2 requires 2 arguments.");
+		return 1;
+	}
 
-	lua_pushnumber(L, atan2(y, x));
+	lua_Number y = lua_tonumber(L, 1);
+	lua_Number x = lua_tonumber(L, 2);
+	lua_pushnumber(L, atan2(static_cast<double>(y), static_cast<double>(x)));
 
 	return 1;
 }

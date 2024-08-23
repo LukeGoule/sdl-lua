@@ -6,14 +6,14 @@ std::string EDrawRect::getName() {
 
 int EDrawRect::handle(lua_State* L) {
 	if (lua_gettop(L) != 4) {
-		this->m_engine->Error("DrawRect expects 4 arguments.");
+		this->m_engine->Error("E_DrawRect expects 4 arguments.");
 		return 1;
 	}
 
-	int x = lua_tonumber(L, 1); // arg1
-	int y = lua_tonumber(L, 2); // arg2
-	int w = lua_tonumber(L, 3); // arg3
-	int h = lua_tonumber(L, 4); // arg4
+	auto x = static_cast<int>(lua_tonumber(L, 1)); // arg1
+	auto y = static_cast<int>(lua_tonumber(L, 2)); // arg2
+	auto w = static_cast<int>(lua_tonumber(L, 3)); // arg3
+	auto h = static_cast<int>(lua_tonumber(L, 4)); // arg4
 
 	/*
 	To explain how this binds textures correctly,
@@ -26,21 +26,15 @@ int EDrawRect::handle(lua_State* L) {
 	|C		D|
 	----------
 	*/
-
 	glBegin(GL_QUADS);
-	{
-		glTexCoord2i(0, 0);			// A
-		glVertex2i(x, y);
-
-		glTexCoord2i(1, 0);			// B
-		glVertex2i(x + w, y);
-
-		glTexCoord2i(1, 1);			// D
-		glVertex2i(x + w, y + h);
-
-		glTexCoord2i(0, 1);			// C
-		glVertex2i(x, y + h);
-	}
+	glTexCoord2i(0, 0);			// A
+	glVertex2i(x, y);
+	glTexCoord2i(1, 0);			// B
+	glVertex2i(x + w, y);
+	glTexCoord2i(1, 1);			// D
+	glVertex2i(x + w, y + h);
+	glTexCoord2i(0, 1);			// C
+	glVertex2i(x, y + h);
 	glEnd();
 
 	return 1;

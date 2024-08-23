@@ -11,10 +11,10 @@ int EGetMousePosition::handle(lua_State* L) {
 
 	lua_newtable(L);
 
-	lua_pushnumber(L, mx);
+	lua_pushnumber(L, static_cast<lua_Number>(mx));
 	lua_rawseti(L, -2, 1);
 
-	lua_pushnumber(L, my);
+	lua_pushnumber(L, static_cast<lua_Number>(my));
 	lua_rawseti(L, -2, 2);
 
 	return 1;

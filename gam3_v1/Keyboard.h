@@ -3,17 +3,19 @@
 
 #include <SDL.h>
 
+#include "EngineModule.h"
+
 #define KEYBOARD_HPP_KEY_COUNT 255
 #define KEYBOARD_HPP_KEY_DOWN 1
 #define KEYBOARD_HPP_KEY_UP 0
 
-class G3Keyboard {
+class Keyboard : public EngineModule {
 public:
-	SDL_Keycode *depressedKeys;
+	SDL_Keycode *m_depressed_keys;
 
-	G3Keyboard();
-	~G3Keyboard();
-
+	Keyboard(Engine* instance);
+	~Keyboard();
+	
 	bool checkState(SDL_Keycode keycode);
 	void setState(SDL_Keycode keycode, bool isDepressed);
 };

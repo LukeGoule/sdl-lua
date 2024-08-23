@@ -161,9 +161,6 @@ hooks:Add("MainRender", "Engine_Render", function ()
 	player.vel.x = player.vel.x - dx
 	player.vel.y = player.vel.y - dy
 
-	print( math.fmod( nTracers, tick + 1 ) )
-	print( tick )
-
 	player.tracer_positions[ math.fmod( tick + 1, nTracers ) ] = {
 		x = player.pos.x,
 		y = player.pos.y
@@ -173,8 +170,6 @@ hooks:Add("MainRender", "Engine_Render", function ()
 	tick = tick + 1
 	if tick > 1000 then tick = 0 end
 end)
-
-print(SDLK.RETURN)
 
 -- This function has to be called to start the game.
 game:Launch(WIDTH, HEIGHT)

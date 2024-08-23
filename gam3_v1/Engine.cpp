@@ -12,12 +12,12 @@
 #include "ESetupWindow.h"
 #include "ECheckKey.h"
 
+Engine* Engine::Init() {
+	this->m_lua_state = luaL_newstate();
+	luaL_openlibs(this->getLua());
 
-void Engine::Init() {
-	this->L = luaL_newstate();
-	luaL_openlibs(this->L);
-
-	this->m_keyboard = new G3Keyboard;
+	this->m_keyboard = new Keyboard(this);
+	this->m_render = new Render(this);
 
 	ESetupWindow::luaRegister(this);
 	ESetDrawColour::luaRegister(this);
@@ -30,36 +30,52 @@ void Engine::Init() {
 	EError::luaRegister(this);
 	EAtan2::luaRegister(this);
 	ECheckKey::luaRegister(this);
+
+	return this;
 }
 
-void Engine::LoadScript(std::string script) {
+lua_State* Engine::getLua() {
+	return this->m_lua_state;
+}
+
+Keyboard* Engine::getKeyboard() {
+	return this->m_keyboard;
+}
+
+Render* Engine::getRender() {
+	return this->m_render;
+}
+
+Engine* Engine::LoadScript(std::string script) {
 	// Load the engine files
 
-	auto fLoad = luaL_loadfile(this->Engine::L, script.c_str());
+	auto fLoad = luaL_loadfile(this->getLua(), script.c_str());
 
 	if (fLoad) {
 		this->LuaError("luaL_loadfile");
-
-		return;
+		return this;
 	}
 
-	auto pCall = lua_pcall(this->L, 0, 0, 0);
+	auto pCall = lua_pcall(this->getLua(), 0, 0, 0);
 
 	if (pCall) {
 		this->LuaError("lua_pcall");
-
-		return;
+		return this;
 	}
+
+	return this;
 }
 
-void Engine::Error(std::string err) {
+Engine* Engine::Error(std::string err) {
 	printf("Error caused: %s\n", err.c_str());
-
 	SDL_Quit();
+
+	return this;
 }
 
-void Engine::LuaError(std::string trace) {
-	printf("[%s][LUA]: %s\n", trace.c_str(), lua_tostring(this->L, -1));
-
+Engine* Engine::LuaError(std::string trace) {
+	printf("[%s][LUA]: %s\n", trace.c_str(), lua_tostring(this->getLua(), -1));
 	SDL_Quit();
+
+	return this;
 }

@@ -6,7 +6,7 @@ std::string ESetDrawColour::getName() {
 
 int ESetDrawColour::handle( lua_State* L ) {
 	if ( lua_gettop(L) != 3 ) {
-		this->m_engine->Error("SetDrawColour expects 3 arguments");
+		this->m_engine->Error("E_SetDrawColour expects 3 arguments");
 		return 0;
 	}
 
