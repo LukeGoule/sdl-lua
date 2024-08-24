@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class EDrawTriangle : public BaseLuaFunction<EDrawTriangle> {
+class engine_DrawTriangle : public BaseLuaFunction<engine_DrawTriangle> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

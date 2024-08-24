@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class EGetMousePosition : public BaseLuaFunction<EGetMousePosition> {
+class engine_GetMousePosition : public BaseLuaFunction<engine_GetMousePosition> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

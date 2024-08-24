@@ -1,3 +1,5 @@
+local engine = require("engine")
+
 render = { }
 
 function render:Texture()
@@ -16,11 +18,11 @@ end
 function render:OpenTexture(txName)
 	new_texture = {
 		name = txName,
-		id = E_LoadTexture(txName)
+		id = engine:LoadTexture(txName)
 	};
 
 	if (id == -1) then
-		E_Error("Failed to load texture with name " .. txName)
+		engine:Error("Failed to load texture with name " .. txName)
 		return
 	end
 
@@ -30,8 +32,7 @@ end
 function render:UseTexture(tx)
 	if (tx.id == -1) then return end
 
-	--print("Bound " .. tx.name)
-	E_BindTexture(tx.id)
+	engine:BindTexture(tx.id)
 end
 
 function float_clamp(f)
@@ -51,9 +52,9 @@ function render:SetDrawColour(r, g, b)
 	g = float_clamp(g)
 	b = float_clamp(b)
 
-	E_SetDrawColour(r, g, b)
+	engine:SetDrawColour(r, g, b)
 end
 
 function render:DrawRect(x, y, w, h)
-	E_DrawRect(x, y, w, h)
+	engine:DrawRect(x, y, w, h)
 end

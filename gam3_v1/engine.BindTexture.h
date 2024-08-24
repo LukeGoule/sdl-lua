@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class EBindTexture : public BaseLuaFunction<EBindTexture> {
+class engine_BindTexture : public BaseLuaFunction<engine_BindTexture> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

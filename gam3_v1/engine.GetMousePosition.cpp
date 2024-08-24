@@ -1,10 +1,10 @@
-#include "EGetMousePosition.h"
+#include "engine.GetMousePosition.h"
 
-std::string EGetMousePosition::getName() {
-	return std::string("E_GetMousePosition");
+std::string engine_GetMousePosition::getName() {
+	return std::string("GetMousePosition");
 }
 
-int EGetMousePosition::handle(lua_State* L) {
+int engine_GetMousePosition::handle(lua_State* L) {
 	int mx = 0, my = 0;
 
 	SDL_GetMouseState(&mx, &my);

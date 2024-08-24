@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class ELoadTexture : public BaseLuaFunction<ELoadTexture> {
+class engine_LoadTexture : public BaseLuaFunction<engine_LoadTexture> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

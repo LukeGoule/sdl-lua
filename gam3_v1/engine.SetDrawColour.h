@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class ESetDrawColour : public BaseLuaFunction<ESetDrawColour> {
+class engine_SetDrawColour : public BaseLuaFunction<engine_SetDrawColour> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

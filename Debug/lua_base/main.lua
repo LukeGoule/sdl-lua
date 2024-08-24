@@ -6,6 +6,9 @@ ReadMe:
 	editing it there's nothing interesting you can do in there that you can't do here.
 ]]
 
+local engine = require("engine")
+print( engine:Atan2(10,10) )
+
 require("lua_base/g3Lua_v1")
 
 local pepe = render:EmptyTexture() -- Preload an empty texture as a placeholder
@@ -66,7 +69,7 @@ hooks:Add("MainLoad", "Engine_LoadResources", function ()
 end)
 
 function CalcAng(Pos0, Pos1)
-	local result = E_Atan2(Pos0.y - Pos1.y, Pos0.x - Pos1.x)
+	local result = engine:Atan2(Pos0.y - Pos1.y, Pos0.x - Pos1.x)
 	result = result + (3.141592653589793238 / 2) -- Add 90deg
 	return result
 end
@@ -79,16 +82,16 @@ hooks:Add("MainRender", "Engine_Render", function ()
 	local mpos = game:MousePosition()
 
 	-- Player movement controls
-	if E_CheckKey( SDLK.SDL_SPACE ) and player.onground then
+	if engine:CheckKey( SDLK.SDL_SPACE ) and player.onground then
 		player.vel.y = 5 -- Jump velocity (negative to move upwards)
 		player.onground = false -- The player is no longer on the ground after jumping
 	end
 
-	if E_CheckKey( SDLK.SDLK_LEFT ) then
+	if engine:CheckKey( SDLK.SDLK_LEFT ) then
 		player.vel.x = player.vel.x - 0.1
 	end
 
-	if E_CheckKey( SDLK.SDLK_RIGHT ) then
+	if engine:CheckKey( SDLK.SDLK_RIGHT ) then
 		player.vel.x = player.vel.x + 0.1
 	end
 

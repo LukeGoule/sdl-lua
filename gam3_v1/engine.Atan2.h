@@ -1,12 +1,11 @@
 #pragma once
-#pragma once
 
-#ifndef LUA_CHECK_KEY
-#define LUA_CHECK_KEY
+#ifndef LUA_ATAN2
+#define LUA_ATAN2
 
 #include "BaseLuaFunction.h"
 
-class ECheckKey : public BaseLuaFunction<ECheckKey> {
+class engine_Atan2 : public BaseLuaFunction<engine_Atan2> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

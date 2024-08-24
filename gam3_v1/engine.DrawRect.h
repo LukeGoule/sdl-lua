@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class EDrawRect : public BaseLuaFunction<EDrawRect> {
+class engine_DrawRect : public BaseLuaFunction<engine_DrawRect> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

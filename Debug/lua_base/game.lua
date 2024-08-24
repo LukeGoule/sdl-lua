@@ -1,3 +1,5 @@
+local engine = require("engine")
+
 game	= {}	-- This table holds the engine functions
 
 -- This is a wrapper function to call the C++ engine function that
@@ -14,25 +16,25 @@ function game:Launch(w, h)
 		height = 900
 	end
 
-	E_LaunchWindow(w, h, "Test")
+	engine:LaunchWindow(w, h, "Test")
 end
 
 function game:Fullscreen(_mode)
 	mode = string.lower(_mode)
 
 	if (mode == "windowed") then
-		E_SetFullscreen(0)
+		engine:SetFullscreen(0)
 	elseif (mode == "fullscreen") then
-		E_SetFullscreen(1)
+		engine:SetFullscreen(1)
 	elseif (mode == "desktop") then
-		E_SetFullscreen(4097)
+		engine:SetFullscreen(4097)
 	else
 		print("Invalid fullscreen mode provided")
 	end
 end
 
 function game:MousePosition()
-	local mPos = E_GetMousePosition()
+	local mPos = engine:GetMousePosition()
 
 	return { 
 		x = mPos[1], 

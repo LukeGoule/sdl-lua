@@ -34,7 +34,8 @@ public:
 		T::getInstance().m_engine = instance;
 
 		lua_pushcfunction(instance->getLua(), T::luaHandle);
-		lua_setglobal(instance->getLua(), T::getInstance().getName().c_str());
+		lua_setfield(instance->getLua(), -2, T::getInstance().getName().c_str());
+		//lua_setglobal(instance->getLua(), T::getInstance().getName().c_str());
 	}
 
 protected:

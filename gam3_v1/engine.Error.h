@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class EError : public BaseLuaFunction<EError> {
+class engine_Error : public BaseLuaFunction<engine_Error> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

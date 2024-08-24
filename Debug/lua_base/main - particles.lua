@@ -8,6 +8,8 @@ ReadMe:
 
 require("g3Lua_v1")
 
+local engine = require("engine")
+
 local pepe = render:EmptyTexture() -- Preload an empty texture as a placeholder
 
 local WIDTH  = 1600
@@ -45,7 +47,7 @@ hooks:Add("MainLoad", "Engine_LoadResources", function ()
 end)
 
 function CalcAng(Pos0, Pos1)
-	local result = E_Atan2(Pos0.y - Pos1.y, Pos0.x - Pos1.x)
+	local result = engine:Atan2(Pos0.y - Pos1.y, Pos0.x - Pos1.x)
 	result = result + (3.141592653589793238 / 2) -- Add 90deg
 	return result
 end
@@ -101,7 +103,7 @@ hooks:Add("MainRender", "Engine_Render", function ()
 		end
 
 		--print( "Expected: ", SDLK.SDL_SPACE )
-		if E_CheckKey( SDLK.SDL_SPACE ) then
+		if engine:CheckKey( SDLK.SDL_SPACE ) then
 			print("PRESSING SPACE")
 		end
 

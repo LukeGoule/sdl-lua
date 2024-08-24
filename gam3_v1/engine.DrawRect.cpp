@@ -1,19 +1,19 @@
-#include "EDrawRect.h"
+#include "engine.DrawRect.h"
 
-std::string EDrawRect::getName() {
-	return std::string("E_DrawRect");
+std::string engine_DrawRect::getName() {
+	return std::string("DrawRect");
 }
 
-int EDrawRect::handle(lua_State* L) {
-	if (lua_gettop(L) != 4) {
-		this->m_engine->Error("E_DrawRect expects 4 arguments.");
+int engine_DrawRect::handle(lua_State* L) {
+	if (lua_gettop(L) != 5) {
+		this->m_engine->Error("DrawRect expects 4 arguments.");
 		return 1;
 	}
 
-	auto x = static_cast<int>(lua_tonumber(L, 1)); // arg1
-	auto y = static_cast<int>(lua_tonumber(L, 2)); // arg2
-	auto w = static_cast<int>(lua_tonumber(L, 3)); // arg3
-	auto h = static_cast<int>(lua_tonumber(L, 4)); // arg4
+	auto x = static_cast<int>(lua_tonumber(L, 2)); // arg1
+	auto y = static_cast<int>(lua_tonumber(L, 3)); // arg2
+	auto w = static_cast<int>(lua_tonumber(L, 4)); // arg3
+	auto h = static_cast<int>(lua_tonumber(L, 5)); // arg4
 
 	/*
 	To explain how this binds textures correctly,

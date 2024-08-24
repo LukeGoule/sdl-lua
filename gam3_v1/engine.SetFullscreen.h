@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class ESetFullscreen : public BaseLuaFunction<ESetFullscreen> {
+class engine_SetFullscreen : public BaseLuaFunction<engine_SetFullscreen> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;

@@ -8,8 +8,9 @@
 
 #include "Keyboard.h"
 #include "Render.h"
+#include "Singleton.h"
 
-class Engine {
+class Engine : public Singleton<Engine> {
 private:
 	lua_State* m_lua_state = nullptr;
 	Keyboard* m_keyboard = nullptr;
@@ -26,4 +27,6 @@ public:
 	// Error handling functions
 	Engine* Error(std::string err);
 	Engine* LuaError(std::string trace);
+
+	static int initialiseLua(lua_State* L);
 };

@@ -1,16 +1,40 @@
 #include "Engine.h"
-#include "EAtan2.h"
-#include "EBindTexture.h"
-#include "ECheckKey.h"
-#include "EDrawRect.h"
-#include "EDrawTriangle.h"
-#include "EError.h"
-#include "EGetMousePosition.h"
-#include "ELoadTexture.h"
-#include "ESetDrawColour.h"
-#include "ESetFullscreen.h"
-#include "ESetupWindow.h"
-#include "ECheckKey.h"
+
+#include "engine.Atan2.h"
+#include "engine.BindTexture.h"
+#include "engine.CheckKey.h"
+#include "engine.DrawRect.h"
+#include "engine.DrawTriangle.h"
+#include "engine.Error.h"
+#include "engine.GetMousePosition.h"
+#include "engine.LoadTexture.h"
+#include "engine.SetDrawColour.h"
+#include "engine.SetFullscreen.h"
+#include "engine.LaunchWindow.h"
+#include "engine.CheckKey.h"
+
+int Engine::initialiseLua(lua_State* L) {
+
+	// Create a new table
+	lua_newtable(L);
+	
+	const auto m_engine = &Engine::getInstance();
+	
+	engine_LaunchWindow::luaRegister(m_engine);	
+	engine_SetDrawColour::luaRegister(m_engine);
+	engine_LoadTexture::luaRegister(m_engine);
+	engine_DrawTriangle::luaRegister(m_engine);
+	engine_DrawRect::luaRegister(m_engine);
+	engine_BindTexture::luaRegister(m_engine);
+	engine_SetFullscreen::luaRegister(m_engine);
+	engine_GetMousePosition::luaRegister(m_engine);
+	engine_Error::luaRegister(m_engine);
+	engine_Atan2::luaRegister(m_engine);
+	engine_CheckKey::luaRegister(m_engine);
+
+	// The table is already on the top of the stack, so return it
+	return 1;
+}
 
 Engine* Engine::Init() {
 	this->m_lua_state = luaL_newstate();
@@ -19,17 +43,9 @@ Engine* Engine::Init() {
 	this->m_keyboard = new Keyboard(this);
 	this->m_render = new Render(this);
 
-	ESetupWindow::luaRegister(this);
-	ESetDrawColour::luaRegister(this);
-	ELoadTexture::luaRegister(this);
-	EDrawTriangle::luaRegister(this);
-	EDrawRect::luaRegister(this);
-	EBindTexture::luaRegister(this);
-	ESetFullscreen::luaRegister(this);
-	EGetMousePosition::luaRegister(this);
-	EError::luaRegister(this);
-	EAtan2::luaRegister(this);
-	ECheckKey::luaRegister(this);
+	// Register the test module
+	luaL_requiref(this->m_lua_state, "engine", Engine::initialiseLua, 1);
+	lua_pop(this->m_lua_state, 1);
 
 	return this;
 }

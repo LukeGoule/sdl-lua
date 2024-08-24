@@ -1,24 +1,24 @@
-#include "ELoadTexture.h"
+#include "engine.LoadTexture.h"
 
 #include <SDL_image.h>
 
-std::string ELoadTexture::getName() {
-	return std::string("E_LoadTexture");
+std::string engine_LoadTexture::getName() {
+	return std::string("LoadTexture");
 }
 
 /*
 This function loads up a texture into the GPU, ready to be used.
 Thanks to: http://www.sdltutorials.com/sdl-tip-sdl-surface-to-opengl-texture
 */
-int ELoadTexture::handle(lua_State* L) {
-	if (lua_gettop(L) != 1) {
-		this->m_engine->Error("E_LoadTexture requires 1 argument.");
+int engine_LoadTexture::handle(lua_State* L) {
+	if (lua_gettop(L) != 2) {
+		this->m_engine->Error("LoadTexture requires 1 argument.");
 		return 1;
 	}
 
 	GLuint TextureID = 0;
 
-	SDL_Surface* Surface = IMG_Load(lua_tostring(L, 1));
+	SDL_Surface* Surface = IMG_Load(lua_tostring(L, 2));
 
 	glGenTextures(1, &TextureID);
 	glBindTexture(GL_TEXTURE_2D, TextureID);

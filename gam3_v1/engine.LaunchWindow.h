@@ -5,7 +5,7 @@
 
 #include "BaseLuaFunction.h"
 
-class ESetupWindow : public BaseLuaFunction<ESetupWindow> {
+class engine_LaunchWindow : public BaseLuaFunction<engine_LaunchWindow> {
 public:
 	std::string getName() override;
 	int handle(lua_State* L) override;
