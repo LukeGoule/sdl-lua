@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_SET_DRAW_COLOUR
-#define LUA_SET_DRAW_COLOUR
+#ifndef ENGINE_SET_DRAW_COLOUR_HPP
+#define ENGINE_SET_DRAW_COLOUR_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_SetDrawColour : public BaseLuaFunction<engine_SetDrawColour> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_SET_DRAW_COLOUR
+#endif // !ENGINE_SET_DRAW_COLOUR_HPP

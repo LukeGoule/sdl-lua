@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_BIND_TEXTURE
-#define LUA_BIND_TEXTURE
+#ifndef ENGINE_BIND_TEXTURE_HPP
+#define ENGINE_BIND_TEXTURE_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_BindTexture : public BaseLuaFunction<engine_BindTexture> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_BIND_TEXTURE
+#endif // !ENGINE_BIND_TEXTURE_HPP

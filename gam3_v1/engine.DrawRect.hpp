@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_DRAW_RECT
-#define LUA_DRAW_RECT
+#ifndef ENGINE_DRAW_RECT_HPP
+#define ENGINE_DRAW_RECT_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_DrawRect : public BaseLuaFunction<engine_DrawRect> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_DRAW_RECT
+#endif // !ENGINE_DRAW_RECT_HPP

@@ -1,4 +1,4 @@
-#include "engine.GetMousePosition.h"
+#include "engine.GetMousePosition.hpp"
 
 std::string engine_GetMousePosition::getName() {
 	return std::string("GetMousePosition");

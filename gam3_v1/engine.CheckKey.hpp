@@ -1,10 +1,9 @@
 #pragma once
-#pragma once
 
-#ifndef LUA_CHECK_KEY
-#define LUA_CHECK_KEY
+#ifndef ENGINE_CHECK_KEY_HPP
+#define ENGINE_CHECK_KEY_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_CheckKey : public BaseLuaFunction<engine_CheckKey> {
 public:
@@ -12,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_ATAN2
+#endif // !ENGINE_CHECK_KEY_HPP

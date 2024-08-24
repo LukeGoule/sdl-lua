@@ -281,55 +281,55 @@
     <ClInclude Include="..\Lua\lzio.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="BaseLuaFunction.h">
+    <ClInclude Include="BaseLuaFunction.hpp">
       <Filter>Header Files\Engine\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
+    <ClInclude Include="Singleton.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="engine.CheckKey.h">
+    <ClInclude Include="engine.CheckKey.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.Atan2.h">
+    <ClInclude Include="engine.Atan2.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.Error.h">
+    <ClInclude Include="engine.Error.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.GetMousePosition.h">
+    <ClInclude Include="engine.GetMousePosition.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.SetFullscreen.h">
+    <ClInclude Include="engine.SetFullscreen.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.BindTexture.h">
+    <ClInclude Include="engine.BindTexture.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.DrawRect.h">
+    <ClInclude Include="engine.DrawRect.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.DrawTriangle.h">
+    <ClInclude Include="engine.DrawTriangle.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.LoadTexture.h">
+    <ClInclude Include="engine.LoadTexture.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.SetDrawColour.h">
+    <ClInclude Include="engine.SetDrawColour.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="engine.LaunchWindow.h">
+    <ClInclude Include="engine.LaunchWindow.hpp">
       <Filter>Header Files\Engine\Lua\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="EngineModule.h">
+    <ClInclude Include="EngineModule.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
+    <ClInclude Include="Engine.hpp">
       <Filter>Header Files\Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Keyboard.h">
+    <ClInclude Include="Keyboard.hpp">
       <Filter>Header Files\Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
+    <ClInclude Include="Render.hpp">
       <Filter>Header Files\Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>

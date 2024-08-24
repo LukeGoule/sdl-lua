@@ -1,4 +1,4 @@
-#include "engine.SetDrawColour.h"
+#include "engine.SetDrawColour.hpp"
 
 std::string engine_SetDrawColour::getName() {
 	return std::string("SetDrawColour");

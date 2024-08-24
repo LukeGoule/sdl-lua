@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_DRAW_TRIANGLE
-#define LUA_DRAW_TRIANGLE
+#ifndef ENGINE_DRAW_TRIANGLE_HPP
+#define ENGINE_DRAW_TRIANGLE_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_DrawTriangle : public BaseLuaFunction<engine_DrawTriangle> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_DRAW_TRIANGLE
+#endif // !ENGINE_DRAW_TRIANGLE_HPP

@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_GET_MOUSE_POSITION
-#define LUA_GET_MOUSE_POSITION
+#ifndef ENGINE_GET_MOUSE_POSITION_HPP
+#define ENGINE_GET_MOUSE_POSITION_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_GetMousePosition : public BaseLuaFunction<engine_GetMousePosition> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_GET_MOUSE_POSITION
+#endif // !ENGINE_GET_MOUSE_POSITION_HPP

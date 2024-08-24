@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_SETUP_WINDOW
-#define LUA_SETUP_WINDOW
+#ifndef ENGINE_SETUP_WINDOW_HPP
+#define ENGINE_SETUP_WINDOW_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_LaunchWindow : public BaseLuaFunction<engine_LaunchWindow> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_SETUP_WINDOW
+#endif // !ENGINE_SETUP_WINDOW_HPP

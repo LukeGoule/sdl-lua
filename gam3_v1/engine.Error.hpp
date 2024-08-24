@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_E_ERROR
-#define LUA_E_ERROR
+#ifndef ENGINE_ERROR_HPP
+#define ENGINE_ERROR_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_Error : public BaseLuaFunction<engine_Error> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_E_ERROR
+#endif // !ENGINE_ERROR_HPP

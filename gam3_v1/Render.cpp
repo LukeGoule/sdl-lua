@@ -1,6 +1,5 @@
-#include "Render.h"
-#include "Engine.h"
-
+#include "Render.hpp"
+#include "Engine.hpp"
 #include <iostream>
 
 Render::Render(Engine* instance) : EngineModule(instance) {}

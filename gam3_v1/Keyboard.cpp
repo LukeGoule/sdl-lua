@@ -1,5 +1,4 @@
-#include "Keyboard.h"
-
+#include "Keyboard.hpp"
 #include <stdio.h>
 
 Keyboard::Keyboard( Engine* instance ) : EngineModule(instance) {
@@ -11,7 +10,7 @@ Keyboard::Keyboard( Engine* instance ) : EngineModule(instance) {
 }
 
 Keyboard::~Keyboard() {
-	delete this->m_depressed_keys; // I don't remember how to code C++ lmao. (15/08/2024)
+	delete this->m_depressed_keys; // @TODO Check this is valid.
 }
 
 bool Keyboard::checkState(SDL_Keycode keycode) {

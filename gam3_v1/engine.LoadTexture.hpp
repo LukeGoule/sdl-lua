@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_LOAD_TEXTURE
-#define LUA_LOAD_TEXTURE
+#ifndef ENGINE_LOAD_TEXTURE_HPP
+#define ENGINE_LOAD_TEXTURE_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_LoadTexture : public BaseLuaFunction<engine_LoadTexture> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_LOAD_TEXTURE
+#endif // !ENGINE_LOAD_TEXTURE_HPP

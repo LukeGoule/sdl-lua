@@ -1,4 +1,4 @@
-#include "engine.SetFullscreen.h"
+#include "engine.SetFullscreen.hpp"
 
 std::string engine_SetFullscreen::getName() {
 	return std::string("SetFullscreen");

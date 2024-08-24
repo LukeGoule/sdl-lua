@@ -1,21 +1,20 @@
-#include "Engine.h"
+#include "Engine.hpp"
 
-#include "engine.Atan2.h"
-#include "engine.BindTexture.h"
-#include "engine.CheckKey.h"
-#include "engine.DrawRect.h"
-#include "engine.DrawTriangle.h"
-#include "engine.Error.h"
-#include "engine.GetMousePosition.h"
-#include "engine.LoadTexture.h"
-#include "engine.SetDrawColour.h"
-#include "engine.SetFullscreen.h"
-#include "engine.LaunchWindow.h"
-#include "engine.CheckKey.h"
+#include "engine.Atan2.hpp"
+#include "engine.BindTexture.hpp"
+#include "engine.CheckKey.hpp"
+#include "engine.DrawRect.hpp"
+#include "engine.DrawTriangle.hpp"
+#include "engine.Error.hpp"
+#include "engine.GetMousePosition.hpp"
+#include "engine.LoadTexture.hpp"
+#include "engine.SetDrawColour.hpp"
+#include "engine.SetFullscreen.hpp"
+#include "engine.LaunchWindow.hpp"
+#include "engine.CheckKey.hpp"
 
 int Engine::initialiseLua(lua_State* L) {
-
-	// Create a new table
+	// Create a new table, which will be require-able.
 	lua_newtable(L);
 	
 	const auto m_engine = &Engine::getInstance();
@@ -50,18 +49,6 @@ Engine* Engine::Init() {
 	return this;
 }
 
-lua_State* Engine::getLua() {
-	return this->m_lua_state;
-}
-
-Keyboard* Engine::getKeyboard() {
-	return this->m_keyboard;
-}
-
-Render* Engine::getRender() {
-	return this->m_render;
-}
-
 Engine* Engine::LoadScript(std::string script) {
 	// Load the engine files
 
@@ -94,4 +81,16 @@ Engine* Engine::LuaError(std::string trace) {
 	SDL_Quit();
 
 	return this;
+}
+
+lua_State* Engine::getLua() {
+	return this->m_lua_state;
+}
+
+Keyboard* Engine::getKeyboard() {
+	return this->m_keyboard;
+}
+
+Render* Engine::getRender() {
+	return this->m_render;
 }

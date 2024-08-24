@@ -1,4 +1,4 @@
-#include "engine.BindTexture.h"
+#include "engine.BindTexture.hpp"
 
 std::string engine_BindTexture::getName() {
 	return std::string("BindTexture");

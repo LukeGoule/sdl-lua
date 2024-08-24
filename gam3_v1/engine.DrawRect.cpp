@@ -1,4 +1,4 @@
-#include "engine.DrawRect.h"
+#include "engine.DrawRect.hpp"
 
 std::string engine_DrawRect::getName() {
 	return std::string("DrawRect");

@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_ATAN2
-#define LUA_ATAN2
+#ifndef ENGINE_ATAN2_HPP
+#define ENGINE_ATAN2_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_Atan2 : public BaseLuaFunction<engine_Atan2> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_ATAN2
+#endif // !ENGINE_ATAN2_HPP

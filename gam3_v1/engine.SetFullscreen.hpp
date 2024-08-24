@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LUA_SET_FULLSCREEN
-#define LUA_SET_FULLSCREEN
+#ifndef ENGINE_SET_FULLSCREEN_HPP
+#define ENGINE_SET_FULLSCREEN_HPP
 
-#include "BaseLuaFunction.h"
+#include "BaseLuaFunction.hpp"
 
 class engine_SetFullscreen : public BaseLuaFunction<engine_SetFullscreen> {
 public:
@@ -11,4 +11,4 @@ public:
 	int handle(lua_State* L) override;
 };
 
-#endif // !LUA_SET_FULLSCREEN
+#endif // !ENGINE_SET_FULLSCREEN_HPP

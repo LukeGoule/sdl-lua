@@ -1,4 +1,4 @@
-#include "engine.DrawTriangle.h"
+#include "engine.DrawTriangle.hpp"
 
 std::string engine_DrawTriangle::getName() {
 	return std::string("DrawTriangle");

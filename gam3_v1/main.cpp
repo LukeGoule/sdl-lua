@@ -1,9 +1,6 @@
-// Statically assigned classes should be used in this engine to allow Lua
-// to bind to the C(++) code.
-
-#include "Engine.h"
-
+#include "Engine.hpp"
 #undef main
+
 int main(int argc, char** argv) {
 	const auto m_engine = &Engine::getInstance();
 	
