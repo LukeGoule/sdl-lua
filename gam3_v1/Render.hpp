@@ -4,6 +4,7 @@
 #define RENDER_HPP
 
 #include "EngineModule.hpp"
+#include "glew.h"
 #include <SDL.h>
 
 struct SDL_Window;
@@ -74,12 +75,29 @@ public:
 	/*
 	 * Main loop method.
 	 */
-	void run();
+	void run2d();
 
 	/*
 	 * Shuts down the render.
 	 */
 	void quit();
+
+	float m_lowAmp = 0.0f;
+	float m_midAmp = 0.0f;
+	float m_highAmp = 0.0f;
+
+	void setAmplitudes(float low, float mid, float high);
+
+
+	/*
+	 * Compile an OpenGL shader (GLSL).
+	 */
+	GLuint compileShader(GLenum type, const char* szCode);
+
+	/*
+	 * Compile a full OpenGL shader program (GLSL).
+	 */
+	GLuint compileShaderProgram(const char* szVertexShader, const char* szFragmentShader);
 
 	/*
 	 * Returns the SDL fullscreen integer.

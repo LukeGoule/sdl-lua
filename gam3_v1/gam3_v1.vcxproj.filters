@@ -49,6 +49,9 @@
     <Filter Include="Header Files\Engine\Modules">
       <UniqueIdentifier>{654fc7ba-6c16-4036-a52b-6a26edff8199}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{29a91179-d1e2-40e1-bfd0-60dfde0b1c10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -356,6 +359,15 @@
     </None>
     <None Include="..\Debug\lua_base\sdlk.lua">
       <Filter>Lua Src</Filter>
+    </None>
+    <None Include="..\Debug\lua_base\files.lua">
+      <Filter>Lua Src</Filter>
+    </None>
+    <None Include="..\Debug\shaders\fragment.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Debug\shaders\vertex.glsl">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

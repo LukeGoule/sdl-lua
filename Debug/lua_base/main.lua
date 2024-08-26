@@ -7,9 +7,19 @@ ReadMe:
 ]]
 
 local engine = require("engine")
-print( engine:Atan2(10,10) )
 
+require("lua_base/files")
 require("lua_base/g3Lua_v1")
+
+
+-- tests the functions above
+local file = 'lua_base/files.lua'
+local lines = lines_from(file)
+
+-- print all line numbers and their contents
+--for k,v in pairs(lines) do
+  --print('line[' .. k .. ']', v)
+--end
 
 local pepe = render:EmptyTexture() -- Preload an empty texture as a placeholder
 

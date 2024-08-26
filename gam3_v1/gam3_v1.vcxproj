@@ -79,11 +79,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\SDL\include;$(ProjectDir)\..\GLUT3;$(ProjectDir)\..\GLM;$(ProjectDir)\..\GLEW\include\GL;$(ProjectDir)\..\Lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\SDL\include;$(ProjectDir)\..\GLUT3;$(ProjectDir)\..\GLM;$(ProjectDir)\..\GLEW\include\GL;$(ProjectDir)\..\Portaudio\include;$(ProjectDir)\..\Lua;$(ProjectDir)\..\FFTW3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\SDL\lib\x86;$(ProjectDir)\..\GLEW\lib\x86;$(ProjectDir)\..\GLUT3;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;OpenGL32.lib;glu32.lib;SDL2.lib;SDL2_image.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\SDL\lib\x86;$(ProjectDir)\..\GLEW\lib\x86;$(ProjectDir)\..\Portaudio\lib;$(ProjectDir)\..\FFTW3\lib;$(ProjectDir)\..\GLUT3;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;OpenGL32.lib;glu32.lib;SDL2.lib;SDL2_image.lib;SDL2main.lib;portaudio.lib;libfftw3-3.lib;libfftw3f-3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -222,6 +222,7 @@
   <ItemGroup>
     <None Include="..\.gitattributes" />
     <None Include="..\.gitignore" />
+    <None Include="..\Debug\lua_base\files.lua" />
     <None Include="..\Debug\lua_base\g3Lua_v1.lua" />
     <None Include="..\Debug\lua_base\game.lua" />
     <None Include="..\Debug\lua_base\hooks.lua" />
@@ -229,6 +230,8 @@
     <None Include="..\Debug\lua_base\main.lua" />
     <None Include="..\Debug\lua_base\render.lua" />
     <None Include="..\Debug\lua_base\sdlk.lua" />
+    <None Include="..\Debug\shaders\fragment.glsl" />
+    <None Include="..\Debug\shaders\vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\API.txt" />

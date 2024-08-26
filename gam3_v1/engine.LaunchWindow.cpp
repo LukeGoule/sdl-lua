@@ -18,7 +18,7 @@ int engine_LaunchWindow::handle(lua_State* L) {
 	this->m_engine->getRender()->initOpenGL();
 	this->m_engine->getRender()->initWindow(wn, wx, wy);
 	this->m_engine->getRender()->init2d(wx, wy);
-	this->m_engine->getRender()->run();
+	this->m_engine->getRender()->run2d();
 	this->m_engine->getRender()->quit();
 
 	return 0;

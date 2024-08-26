@@ -1,6 +1,11 @@
 #include "Render.hpp"
 #include "Engine.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 Render::Render(Engine* instance) : EngineModule(instance) {}
 
@@ -16,6 +21,10 @@ void Render::initOpenGL() {
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 }
 
 void Render::initWindow(const char* title, int widthPx, int heightPx) {
@@ -35,22 +44,87 @@ void Render::init2d(int widthPx, int heightPx) {
 	}
 }
 
-void Render::run() {
+std::string readFileIntoString(const std::string& filePath) {
+	std::ifstream fileStream(filePath);
+	if (!fileStream.is_open()) {
+		std::cerr << "Could not open the file: " << filePath << std::endl;
+		return "";
+	}
+
+	std::stringstream buffer;
+	buffer << fileStream.rdbuf();
+	return buffer.str();
+}
+
+void Render::run2d() {
 	lua_getglobal(this->m_engine->getLua(), "Engine_LoadResources");
 
 	if (lua_pcall(this->m_engine->getLua(), 0, 0, 0) != 0) {
-		printf("[LUA], Engine_Render: %s\n", lua_tostring(this->m_engine->getLua(), -1));
+		this->m_engine->Error(std::string("Engine_Render: ") + lua_tostring(this->m_engine->getLua(), -1));
 		this->m_continue = false;
 	}
 
 	glewExperimental = GL_TRUE;
-	glewInit();
+	if (glewInit() != GLEW_OK) {
+		this->m_engine->Error("GLEW could not be initialised.");
+		this->m_continue = false;
+	}
+
+	// V-Sync
+	SDL_GL_SetSwapInterval(1);
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glOrtho(0, this->m_screen_w, this->m_screen_h, 0, -1, 1);
+
+	float vertices[] = {
+		// Positions         // Colors
+		 3.f,  2.f, 0.0f,  1.0f, 0.0f, 0.0f,  // Top Right
+		 3.f, -2.f, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Right
+		-3.f, -2.f, 0.0f,  0.0f, 0.0f, 1.0f,  // Bottom Left
+		-3.f,  2.f, 0.0f,  1.0f, 1.0f, 0.0f   // Top Left 
+	};
+
+	unsigned int indices[] = {
+		0, 1, 3,
+		1, 2, 3
+	};
+
+	GLuint VBO, VAO, EBO;
+	GLuint shaderProgram = this->compileShaderProgram(
+		readFileIntoString("shaders/vertex.glsl").c_str(),
+		readFileIntoString("shaders/fragment.glsl").c_str()
+	);
+	
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	// Setup transformations here
+	//float angle = glm::radians((float)(tick % 360));
+	//model = glm::rotate<float>(model, angle, glm::vec3(0.0f, 1.0f, 1.0f));
+	auto model		= glm::mat4(1.0f);
+	auto view		= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+	auto projection = glm::perspective(glm::radians(45.0f), (float)this->m_screen_w / (float)this->m_screen_h, 0.1f, 100.0f);
 
 	while (this->m_continue) {
 		SDL_Event* currEvents = new SDL_Event;
@@ -68,15 +142,55 @@ void Render::run() {
 			}
 		}
 
+		float currentTime = SDL_GetTicks() / 1000.0f; // Time in seconds
+		int mx = 0, my = 0;
+		SDL_GetMouseState(&mx, &my);
+
+		// recompile shaders when F2 is pressed.
+		if (this->m_engine->getKeyboard()->checkState(SDLK_F2)) {
+			glDeleteProgram(shaderProgram);
+
+			shaderProgram = this->compileShaderProgram(
+				readFileIntoString("shaders/vertex.glsl").c_str(),
+				readFileIntoString("shaders/fragment.glsl").c_str()
+			);
+
+			printf("Shaders recompiled!\n");
+		}
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0, 0, 0, 1);
 
-		lua_getglobal(this->m_engine->getLua(), "Engine_Render");
+		glUseProgram(shaderProgram);
 
-		if (lua_pcall(this->m_engine->getLua(), 0, 0, 0) != 0) {
-			printf("[LUA], Engine_Render: %s\n", lua_tostring(this->m_engine->getLua(), -1));
-			this->m_continue = false;
-		}
+		GLuint modelLoc = glGetUniformLocation(shaderProgram, "m_mat4Model");
+		GLuint viewLoc = glGetUniformLocation(shaderProgram, "m_mat4View");
+		GLuint projLoc = glGetUniformLocation(shaderProgram, "m_mat4Projection");
+		GLuint timeLoc = glGetUniformLocation(shaderProgram, "m_iTime");
+		GLuint resolutionLoc = glGetUniformLocation(shaderProgram, "m_vec2Resolution");
+		GLuint mousePosLoc = glGetUniformLocation(shaderProgram, "m_vec2MousePosition");
+
+		GLuint audioAmpsLoc = glGetUniformLocation(shaderProgram, "m_vec3AudioAmplitude");
+
+		glUniform1f(timeLoc, currentTime);
+		glUniform2f(resolutionLoc, (float)this->m_screen_w, (float)this->m_screen_h);
+		glUniform2f(mousePosLoc, (float)mx, (float)my);
+
+		glUniform3f(audioAmpsLoc, this->m_lowAmp, this->m_midAmp, this->m_highAmp);
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		//lua_getglobal(this->m_engine->getLua(), "Engine_Render");
+
+		//if (lua_pcall(this->m_engine->getLua(), 0, 0, 0) != 0) {
+		//	printf("[LUA], Engine_Render: %s\n", lua_tostring(this->m_engine->getLua(), -1));
+		//	this->m_continue = false;
+		//}
 
 		SDL_GL_SwapWindow(this->m_window);
 	}
@@ -85,6 +199,57 @@ void Render::run() {
 void Render::quit() {
 	SDL_Quit();
 }
+
+void Render::setAmplitudes(float low, float mid, float high) {
+	this->m_lowAmp = low;
+	this->m_midAmp = mid;
+	this->m_highAmp = high;
+}
+
+
+
+GLuint Render::compileShader(GLenum type, const char* szCode) {
+	GLuint shader = glCreateShader(type);
+	glShaderSource(shader, 1, &szCode, nullptr);
+	glCompileShader(shader);
+
+	GLint success;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	
+	if (!success) {
+		char infoLog[512];
+		glGetShaderInfoLog(shader, 512, nullptr, infoLog);
+		std::cerr << "Shader Compilation Failed: " << infoLog << std::endl; // todo
+	}
+
+	return shader;
+}
+
+GLuint Render::compileShaderProgram(const char* szVertexShader, const char* szFragmentShader) {
+	GLuint vertexShader = compileShader(GL_VERTEX_SHADER, szVertexShader);
+	GLuint fragmentShader = compileShader(GL_FRAGMENT_SHADER, szFragmentShader);
+
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	GLint success;
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
+		std::cerr << "Shader Program Linking Failed: " << infoLog << std::endl; // todo
+	}
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	return shaderProgram;
+}
+
+
+
 
 int Render::getFullscreenMode() {
 	return this->m_fullscreen_mode;

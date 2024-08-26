@@ -1,5 +1,7 @@
 #include "engine.DrawTriangle.hpp"
 
+#include "glm/glm.hpp"
+
 std::string engine_DrawTriangle::getName() {
 	return std::string("DrawTriangle");
 }
