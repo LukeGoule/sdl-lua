@@ -2,7 +2,7 @@
 
 ### Screenshot
 
-![Screenshot](https://github.com/LukeGoule/sdl-lue/blob/main/runtime/res/git.png?raw=true)
+![Screenshot](https://github.com/LukeGoule/sdl-lua/blob/main/runtime/res/git.png?raw=true)
 
 ### Installation
 1. Download the following packages (or build if necessary), create this folder structure:
