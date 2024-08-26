@@ -36,7 +36,7 @@
             - portaudio.h
         - `lib`
             - portaudio_x86.lib
-    - [SDL 2](https://www.libsdl.org/)
+    - [SDL](https://www.libsdl.org/)
         - `include`
             - (header files from SDL 2.)
         - `lib`
