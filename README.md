@@ -1,3 +1,5 @@
 README.md mostly to-do. 
 
-You'll need to add the following folders, named after their respective required library. The project will also have to have the .lib/dll files configured properly; GLM, GLEW, GLUT3, SDL.
+Example of the program running: https://www.youtube.com/watch?v=JVJIZGzSAfg.
+
+Not sure exactly where I'm taking this project, mostly just for me to do some cool C++ stuff.
