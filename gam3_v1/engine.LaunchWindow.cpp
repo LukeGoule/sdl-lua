@@ -12,7 +12,7 @@ int engine_LaunchWindow::handle(lua_State* L) {
 
 	auto wx = static_cast<int>(lua_tonumber(L, 2));
 	auto wy = static_cast<int>(lua_tonumber(L, 3));
-	const char* wn = lua_tostring(L, 3);
+	const char* wn = lua_tostring(L, 4);
 
 	this->m_engine->getRender()->initSDL();
 	this->m_engine->getRender()->initOpenGL();

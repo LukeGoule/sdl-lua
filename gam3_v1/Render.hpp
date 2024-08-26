@@ -82,13 +82,6 @@ public:
 	 */
 	void quit();
 
-	float m_lowAmp = 0.0f;
-	float m_midAmp = 0.0f;
-	float m_highAmp = 0.0f;
-
-	void setAmplitudes(float low, float mid, float high);
-
-
 	/*
 	 * Compile an OpenGL shader (GLSL).
 	 */

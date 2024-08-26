@@ -41,12 +41,20 @@ Engine* Engine::Init() {
 
 	this->m_keyboard = new Keyboard(this);
 	this->m_render = new Render(this);
+	this->m_portaudio = new Portaudio(this);
+
+	// Setup the audio stream.
+	this->m_portaudio->initialise();
 
 	// Register the test module
 	luaL_requiref(this->m_lua_state, "engine", Engine::initialiseLua, 1);
 	lua_pop(this->m_lua_state, 1);
 
 	return this;
+}
+
+void Engine::Cleanup() {
+	this->m_portaudio->cleanup();
 }
 
 Engine* Engine::LoadScript(std::string script) {
@@ -93,4 +101,8 @@ Keyboard* Engine::getKeyboard() {
 
 Render* Engine::getRender() {
 	return this->m_render;
+}
+
+Portaudio* Engine::getPortaudio() {
+	return this->m_portaudio;
 }

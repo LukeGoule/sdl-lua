@@ -12,6 +12,7 @@
 #include "Keyboard.hpp"
 #include "Render.hpp"
 #include "Singleton.hpp"
+#include "Portaudio.hpp"
 
 /*
  * The render/game/lua/experiment "engine" object. This is a singleton so please do not manually instanciate.
@@ -33,6 +34,11 @@ private:
 	 */
 	Render* m_render = nullptr;
 
+	/*
+	 * Audio controller.
+	 */
+	Portaudio* m_portaudio = nullptr;
+
 public:
 
 	/*
@@ -51,10 +57,20 @@ public:
 	Render* getRender();
 
 	/*
+	 * Returns the pointer to the immutable audio controller.
+	 */
+	Portaudio* getPortaudio();
+
+	/*
 	 * Setup Lua.
 	 */
 	Engine* Init();
 
+	/*
+	 * Cleanup everything and quit.
+	 */
+	void Cleanup();
+	
 	/*
 	 * Execute a Lua script on the current thread.
 	 */

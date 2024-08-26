@@ -3,6 +3,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+
+#include "../ImGui/imgui.h"
+#include "../ImGui/imgui_impl_sdl2.h"
+#include "../ImGui/imgui_impl_opengl3.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -25,6 +30,15 @@ void Render::initOpenGL() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	
+	ImGui::StyleColorsDark();
 }
 
 void Render::initWindow(const char* title, int widthPx, int heightPx) {
@@ -77,14 +91,15 @@ void Render::run2d() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glOrtho(0, this->m_screen_w, this->m_screen_h, 0, -1, 1);
+	ImGui_ImplSDL2_InitForOpenGL(this->m_window, this->m_gl_context);
+	ImGui_ImplOpenGL3_Init();
 
 	float vertices[] = {
 		// Positions         // Colors
-		 3.f,  2.f, 0.0f,  1.0f, 0.0f, 0.0f,  // Top Right
-		 3.f, -2.f, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Right
-		-3.f, -2.f, 0.0f,  0.0f, 0.0f, 1.0f,  // Bottom Left
-		-3.f,  2.f, 0.0f,  1.0f, 1.0f, 0.0f   // Top Left 
+		 1000.f,  1000.f, 0.0f,  1.0f, 0.0f, 0.0f,  // Top Right
+		 1000.f, -1000.f, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Right
+		-1000.f, -1000.f, 0.0f,  0.0f, 0.0f, 1.0f,  // Bottom Left
+		-1000.f,  1000.f, 0.0f,  1.0f, 1.0f, 0.0f   // Top Left 
 	};
 
 	unsigned int indices[] = {
@@ -124,11 +139,12 @@ void Render::run2d() {
 	//model = glm::rotate<float>(model, angle, glm::vec3(0.0f, 1.0f, 1.0f));
 	auto model		= glm::mat4(1.0f);
 	auto view		= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-	auto projection = glm::perspective(glm::radians(45.0f), (float)this->m_screen_w / (float)this->m_screen_h, 0.1f, 100.0f);
 
 	while (this->m_continue) {
 		SDL_Event* currEvents = new SDL_Event;
 		while (SDL_PollEvent(currEvents)) {
+			ImGui_ImplSDL2_ProcessEvent(currEvents);
+
 			switch (currEvents->type) {
 			case SDL_EventType::SDL_QUIT: // app quit signal.
 				this->m_continue = false;
@@ -158,8 +174,26 @@ void Render::run2d() {
 			printf("Shaders recompiled!\n");
 		}
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0, 0, 0, 1);
+		if (this->m_engine->getKeyboard()->checkState(SDLK_F3)) {
+			this->m_screen_w = 1920;
+			this->m_screen_h = 1080;
+
+			SDL_SetWindowSize(this->m_window, this->m_screen_w, this->m_screen_h);
+			this->setFullscreenMode(SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+
+		if (this->m_engine->getKeyboard()->checkState(SDLK_F4)) {
+			this->m_screen_w = 1600;
+			this->m_screen_h = 900;
+
+			SDL_SetWindowSize(this->m_window, this->m_screen_w, this->m_screen_h);
+			this->setFullscreenMode(0);
+		}
+
+		auto projection = glm::perspective(glm::radians(45.0f), (float)this->m_screen_w / (float)this->m_screen_h, 0.1f, 100.0f);
+
+		glViewport(0, 0, this->m_screen_w, this->m_screen_h);
+		glOrtho(0, this->m_screen_w, this->m_screen_h, 0, -1, 1);
 
 		glUseProgram(shaderProgram);
 
@@ -176,7 +210,11 @@ void Render::run2d() {
 		glUniform2f(resolutionLoc, (float)this->m_screen_w, (float)this->m_screen_h);
 		glUniform2f(mousePosLoc, (float)mx, (float)my);
 
-		glUniform3f(audioAmpsLoc, this->m_lowAmp, this->m_midAmp, this->m_highAmp);
+		glUniform3f(audioAmpsLoc, 
+			this->m_engine->getPortaudio()->getLow(),
+			this->m_engine->getPortaudio()->getMid(), 
+			this->m_engine->getPortaudio()->getHigh()
+		);
 
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
@@ -192,6 +230,34 @@ void Render::run2d() {
 		//	this->m_continue = false;
 		//}
 
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplSDL2_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("App Control");
+		{
+			ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+			ImGui::Text("%.3f ms/frame -- %.1f FPS", 1000.0f / io.Framerate, io.Framerate);
+
+			const auto pEngine = &Engine::getInstance();
+
+			struct Funcs {
+				static float Get(void* data, int i) {
+					return ((float*)data)[i] * 100.f;
+				}
+			};
+
+			ImGui::PlotLines("Low", Funcs::Get, pEngine->getPortaudio()->getLowHistory(), 70, 0, NULL, 0.f, 1.f);
+			ImGui::PlotLines("Mid", Funcs::Get, pEngine->getPortaudio()->getMidHistory(), 70, 0, NULL, 0.f, 1.f);
+			ImGui::PlotLines("High", Funcs::Get, pEngine->getPortaudio()->getHighHistory(), 70, 0, NULL, 0.f, 1.f);
+		}
+		ImGui::End();
+
+		ImGui::Render();
+
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(this->m_window);
 	}
 }
@@ -199,13 +265,6 @@ void Render::run2d() {
 void Render::quit() {
 	SDL_Quit();
 }
-
-void Render::setAmplitudes(float low, float mid, float high) {
-	this->m_lowAmp = low;
-	this->m_midAmp = mid;
-	this->m_highAmp = high;
-}
-
 
 
 GLuint Render::compileShader(GLenum type, const char* szCode) {

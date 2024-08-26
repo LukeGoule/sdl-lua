@@ -80,6 +80,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\SDL\include;$(ProjectDir)\..\GLUT3;$(ProjectDir)\..\GLM;$(ProjectDir)\..\GLEW\include\GL;$(ProjectDir)\..\Portaudio\include;$(ProjectDir)\..\Lua;$(ProjectDir)\..\FFTW3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\SDL\lib\x86;$(ProjectDir)\..\GLEW\lib\x86;$(ProjectDir)\..\Portaudio\lib;$(ProjectDir)\..\FFTW3\lib;$(ProjectDir)\..\GLUT3;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -123,6 +124,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ImGui\imgui.cpp" />
+    <ClCompile Include="..\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\ImGui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="..\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="..\Lua\lapi.c" />
     <ClCompile Include="..\Lua\lauxlib.c" />
     <ClCompile Include="..\Lua\lbaselib.c" />
@@ -172,9 +180,19 @@
     <ClCompile Include="engine.SetFullscreen.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Portaudio.cpp" />
     <ClCompile Include="Render.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ImGui\imconfig.h" />
+    <ClInclude Include="..\ImGui\imgui.h" />
+    <ClInclude Include="..\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\ImGui\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\ImGui\imstb_truetype.h" />
     <ClInclude Include="..\Lua\lapi.h" />
     <ClInclude Include="..\Lua\lauxlib.h" />
     <ClInclude Include="..\Lua\lcode.h" />
@@ -216,6 +234,7 @@
     <ClInclude Include="Keyboard.hpp" />
     <ClInclude Include="BaseLuaFunction.hpp" />
     <ClInclude Include="EngineModule.hpp" />
+    <ClInclude Include="Portaudio.hpp" />
     <ClInclude Include="Render.hpp" />
     <ClInclude Include="Singleton.hpp" />
   </ItemGroup>
