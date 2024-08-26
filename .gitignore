@@ -407,4 +407,9 @@ FodyWeavers.xsd
 SDL/
 GLM/
 GLEW/
-gam3_v1/Debug/vc141.idb
+engine/Debug/
+packages/
+obj/
+runtime/*.dll
+runtime/*.exe
+runtime/*.pdb

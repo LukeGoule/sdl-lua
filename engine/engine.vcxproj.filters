@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{120b35c5-3d7b-49ab-aa53-dfdae5bebba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{24697a8a-43b0-48b4-bf1c-a6af7ce57df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Lua">
+      <UniqueIdentifier>{4db503ec-1239-4c58-ba11-0798a114443a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Lua">
+      <UniqueIdentifier>{a1b5d004-f37a-443f-84a9-51d057080514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{ea0399d8-7cd7-406c-a642-bb29098f046c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Lua\Functions">
+      <UniqueIdentifier>{5d336bf0-0622-4b96-abcc-6a4e60d21784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Lua\Functions">
+      <UniqueIdentifier>{f24878eb-555e-4353-9895-81d0c860370d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Modules">
+      <UniqueIdentifier>{f3f763ac-58c6-4725-97a1-80fa860488fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Modules">
+      <UniqueIdentifier>{654fc7ba-6c16-4036-a52b-6a26edff8199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Lua Src">
+      <UniqueIdentifier>{3de0c5c3-5a33-4c25-8920-4da38ca962e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{29a91179-d1e2-40e1-bfd0-60dfde0b1c10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packages">
+      <UniqueIdentifier>{38095689-52d6-4beb-88a5-f056ed162ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packages\Lua">
+      <UniqueIdentifier>{6b2b628b-a400-45c2-b944-21b714e80c02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packages\ImGui">
+      <UniqueIdentifier>{98ac7ef7-5998-48f8-8416-259dbf85789d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packages\ImGuiColorTextEdit">
+      <UniqueIdentifier>{a592b486-788b-422f-ad93-22f6cdb47e40}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.Atan2.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.CheckKey.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.LaunchWindow.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.SetDrawColour.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.LoadTexture.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.DrawTriangle.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.DrawRect.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.BindTexture.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.SetFullscreen.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.GetMousePosition.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.Error.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Portaudio.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui_demo.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui_draw.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui_impl_sdl2.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui_tables.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGui\imgui_widgets.cpp">
+      <Filter>Packages\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ldblib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ldebug.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ldo.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ldump.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lfunc.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lgc.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\linit.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\liolib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\llex.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lmathlib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lmem.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\loadlib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lobject.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lopcodes.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\loslib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lparser.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lstate.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lstring.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lstrlib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ltable.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ltablib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\ltm.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lua.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\luac.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lundump.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lutf8lib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lvm.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lzio.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lapi.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lauxlib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lbaselib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lbitlib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lcode.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lcorolib.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\Lua\lctype.c">
+      <Filter>Packages\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\TextEditor.cpp">
+      <Filter>Packages\ImGuiColorTextEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\ImGuiDebugPanel.cpp">
+      <Filter>Packages\ImGuiColorTextEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\LanguageDefinitions.cpp">
+      <Filter>Packages\ImGuiColorTextEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\UnitTests.cpp">
+      <Filter>Packages\ImGuiColorTextEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseLuaFunction.hpp">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.CheckKey.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.Atan2.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.Error.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.GetMousePosition.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.SetFullscreen.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.BindTexture.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.DrawRect.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.DrawTriangle.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.LoadTexture.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.SetDrawColour.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.LaunchWindow.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineModule.hpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Portaudio.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imconfig.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imgui.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imgui_impl_opengl3.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imgui_impl_sdl2.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imgui_internal.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imstb_rectpack.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imstb_textedit.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGui\imstb_truetype.h">
+      <Filter>Packages\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lctype.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\ldebug.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\ldo.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lfunc.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lgc.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\llex.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\llimits.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lmem.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lobject.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lopcodes.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lparser.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lprefix.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lstate.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lstring.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\ltable.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\ltm.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lua.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lua.hpp">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\luaconf.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lualib.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lundump.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lvm.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lzio.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lapi.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lauxlib.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\Lua\lcode.h">
+      <Filter>Packages\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\packages\ImGuiColorTextEdit\TextEditor.h">
+      <Filter>Packages\ImGuiColorTextEdit</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitattributes" />
+    <None Include="..\.gitignore" />
+    <None Include="..\runtime\lua_base\files.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\g3Lua_v1.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\game.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\hooks.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\main - particles.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\main.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\render.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\lua_base\sdlk.lua">
+      <Filter>Resource Files\Lua Src</Filter>
+    </None>
+    <None Include="..\runtime\shaders\fragment.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\runtime\shaders\vertex.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\packages\Lua\Makefile">
+      <Filter>Packages\Lua</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\LICENSEINFO.txt" />
+  </ItemGroup>
+</Project>

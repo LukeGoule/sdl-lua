@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{641150F8-E4F3-4ABE-8A8D-09997722B335}</ProjectGuid>
+    <RootNamespace>gam3v1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>lua_engine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(SolutionDir)\obj</IntDir>
+    <OutDir>$(ProjectDir)\..\runtime</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\packages\SDL\include;$(ProjectDir)\..\packages\GLM;$(ProjectDir)\..\packages\GLEW\include\GL;$(ProjectDir)\..\packages\Portaudio\include;$(ProjectDir)\..\packages\Lua;$(ProjectDir)\..\packages\FFTW3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\packages\SDL\lib\x86;$(ProjectDir)\..\packages\GLEW\lib\x86;$(ProjectDir)\..\packages\Portaudio\lib;$(ProjectDir)\..\packages\FFTW3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;OpenGL32.lib;glu32.lib;SDL2.lib;SDL2_image.lib;SDL2main.lib;portaudio_x86.lib;libfftw3-3.lib;libfftw3f-3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\ImGuiDebugPanel.cpp" />
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\LanguageDefinitions.cpp" />
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\TextEditor.cpp" />
+    <ClCompile Include="..\packages\ImGuiColorTextEdit\UnitTests.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="..\packages\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="..\packages\Lua\lapi.c" />
+    <ClCompile Include="..\packages\Lua\lauxlib.c" />
+    <ClCompile Include="..\packages\Lua\lbaselib.c" />
+    <ClCompile Include="..\packages\Lua\lbitlib.c" />
+    <ClCompile Include="..\packages\Lua\lcode.c" />
+    <ClCompile Include="..\packages\Lua\lcorolib.c" />
+    <ClCompile Include="..\packages\Lua\lctype.c" />
+    <ClCompile Include="..\packages\Lua\ldblib.c" />
+    <ClCompile Include="..\packages\Lua\ldebug.c" />
+    <ClCompile Include="..\packages\Lua\ldo.c" />
+    <ClCompile Include="..\packages\Lua\ldump.c" />
+    <ClCompile Include="..\packages\Lua\lfunc.c" />
+    <ClCompile Include="..\packages\Lua\lgc.c" />
+    <ClCompile Include="..\packages\Lua\linit.c" />
+    <ClCompile Include="..\packages\Lua\liolib.c" />
+    <ClCompile Include="..\packages\Lua\llex.c" />
+    <ClCompile Include="..\packages\Lua\lmathlib.c" />
+    <ClCompile Include="..\packages\Lua\lmem.c" />
+    <ClCompile Include="..\packages\Lua\loadlib.c" />
+    <ClCompile Include="..\packages\Lua\lobject.c" />
+    <ClCompile Include="..\packages\Lua\lopcodes.c" />
+    <ClCompile Include="..\packages\Lua\loslib.c" />
+    <ClCompile Include="..\packages\Lua\lparser.c" />
+    <ClCompile Include="..\packages\Lua\lstate.c" />
+    <ClCompile Include="..\packages\Lua\lstring.c" />
+    <ClCompile Include="..\packages\Lua\lstrlib.c" />
+    <ClCompile Include="..\packages\Lua\ltable.c" />
+    <ClCompile Include="..\packages\Lua\ltablib.c" />
+    <ClCompile Include="..\packages\Lua\ltm.c" />
+    <ClCompile Include="..\packages\Lua\lua.c" />
+    <ClCompile Include="..\packages\Lua\luac.c" />
+    <ClCompile Include="..\packages\Lua\lundump.c" />
+    <ClCompile Include="..\packages\Lua\lutf8lib.c" />
+    <ClCompile Include="..\packages\Lua\lvm.c" />
+    <ClCompile Include="..\packages\Lua\lzio.c" />
+    <ClCompile Include="engine.Atan2.cpp" />
+    <ClCompile Include="engine.BindTexture.cpp" />
+    <ClCompile Include="engine.CheckKey.cpp" />
+    <ClCompile Include="engine.DrawRect.cpp" />
+    <ClCompile Include="engine.DrawTriangle.cpp" />
+    <ClCompile Include="engine.Error.cpp" />
+    <ClCompile Include="engine.GetMousePosition.cpp" />
+    <ClCompile Include="engine.LaunchWindow.cpp" />
+    <ClCompile Include="engine.LoadTexture.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="engine.SetDrawColour.cpp" />
+    <ClCompile Include="engine.SetFullscreen.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Portaudio.cpp" />
+    <ClCompile Include="Render.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\packages\ImGuiColorTextEdit\TextEditor.h" />
+    <ClInclude Include="..\packages\ImGui\imconfig.h" />
+    <ClInclude Include="..\packages\ImGui\imgui.h" />
+    <ClInclude Include="..\packages\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\packages\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\packages\ImGui\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\packages\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\packages\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\packages\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\packages\ImGui\imstb_truetype.h" />
+    <ClInclude Include="..\packages\Lua\lapi.h" />
+    <ClInclude Include="..\packages\Lua\lauxlib.h" />
+    <ClInclude Include="..\packages\Lua\lcode.h" />
+    <ClInclude Include="..\packages\Lua\lctype.h" />
+    <ClInclude Include="..\packages\Lua\ldebug.h" />
+    <ClInclude Include="..\packages\Lua\ldo.h" />
+    <ClInclude Include="..\packages\Lua\lfunc.h" />
+    <ClInclude Include="..\packages\Lua\lgc.h" />
+    <ClInclude Include="..\packages\Lua\llex.h" />
+    <ClInclude Include="..\packages\Lua\llimits.h" />
+    <ClInclude Include="..\packages\Lua\lmem.h" />
+    <ClInclude Include="..\packages\Lua\lobject.h" />
+    <ClInclude Include="..\packages\Lua\lopcodes.h" />
+    <ClInclude Include="..\packages\Lua\lparser.h" />
+    <ClInclude Include="..\packages\Lua\lprefix.h" />
+    <ClInclude Include="..\packages\Lua\lstate.h" />
+    <ClInclude Include="..\packages\Lua\lstring.h" />
+    <ClInclude Include="..\packages\Lua\ltable.h" />
+    <ClInclude Include="..\packages\Lua\ltm.h" />
+    <ClInclude Include="..\packages\Lua\lua.h" />
+    <ClInclude Include="..\packages\Lua\lua.hpp" />
+    <ClInclude Include="..\packages\Lua\luaconf.h" />
+    <ClInclude Include="..\packages\Lua\lualib.h" />
+    <ClInclude Include="..\packages\Lua\lundump.h" />
+    <ClInclude Include="..\packages\Lua\lvm.h" />
+    <ClInclude Include="..\packages\Lua\lzio.h" />
+    <ClInclude Include="engine.Atan2.hpp" />
+    <ClInclude Include="engine.BindTexture.hpp" />
+    <ClInclude Include="engine.CheckKey.hpp" />
+    <ClInclude Include="engine.DrawRect.hpp" />
+    <ClInclude Include="engine.DrawTriangle.hpp" />
+    <ClInclude Include="engine.Error.hpp" />
+    <ClInclude Include="engine.GetMousePosition.hpp" />
+    <ClInclude Include="engine.LoadTexture.hpp" />
+    <ClInclude Include="Engine.hpp" />
+    <ClInclude Include="engine.SetDrawColour.hpp" />
+    <ClInclude Include="engine.SetFullscreen.hpp" />
+    <ClInclude Include="engine.LaunchWindow.hpp" />
+    <ClInclude Include="Keyboard.hpp" />
+    <ClInclude Include="BaseLuaFunction.hpp" />
+    <ClInclude Include="EngineModule.hpp" />
+    <ClInclude Include="Menu.hpp" />
+    <ClInclude Include="Portaudio.hpp" />
+    <ClInclude Include="Render.hpp" />
+    <ClInclude Include="Singleton.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitattributes" />
+    <None Include="..\.gitignore" />
+    <None Include="..\packages\Lua\Makefile" />
+    <None Include="..\runtime\lua_base\files.lua" />
+    <None Include="..\runtime\lua_base\g3Lua_v1.lua" />
+    <None Include="..\runtime\lua_base\game.lua" />
+    <None Include="..\runtime\lua_base\hooks.lua" />
+    <None Include="..\runtime\lua_base\main - particles.lua" />
+    <None Include="..\runtime\lua_base\main.lua" />
+    <None Include="..\runtime\lua_base\render.lua" />
+    <None Include="..\runtime\lua_base\sdlk.lua" />
+    <None Include="..\runtime\shaders\fragment.glsl" />
+    <None Include="..\runtime\shaders\vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\LICENSEINFO.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
