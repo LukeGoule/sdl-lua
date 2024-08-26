@@ -408,6 +408,7 @@ SDL/
 GLM/
 GLEW/
 engine/Debug/
+engine/x64/
 packages/
 obj/
 runtime/*.dll

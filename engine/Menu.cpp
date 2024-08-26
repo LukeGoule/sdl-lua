@@ -51,7 +51,7 @@ void Menu::render() {
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::SetNextWindowSize(ImVec2(500, 350));
+	ImGui::SetNextWindowSize(ImVec2(350, 200));
 	ImGui::Begin("App");
 	{
 		double audioLoad = Pa_GetStreamCpuLoad(this->m_engine->getPortaudio()->getPaStream());

@@ -250,6 +250,7 @@
     <None Include="..\.gitattributes" />
     <None Include="..\.gitignore" />
     <None Include="..\packages\Lua\Makefile" />
+    <None Include="..\README.md" />
     <None Include="..\runtime\lua_base\files.lua" />
     <None Include="..\runtime\lua_base\g3Lua_v1.lua" />
     <None Include="..\runtime\lua_base\game.lua" />

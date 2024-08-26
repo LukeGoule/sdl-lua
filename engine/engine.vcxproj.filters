@@ -453,6 +453,7 @@
     <None Include="..\packages\Lua\Makefile">
       <Filter>Packages\Lua</Filter>
     </None>
+    <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\LICENSEINFO.txt" />
