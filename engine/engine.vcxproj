@@ -183,11 +183,20 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="engine.SetDrawColour.cpp" />
     <ClCompile Include="engine.SetFullscreen.cpp" />
+    <ClCompile Include="hooks.Add.cpp" />
+    <ClCompile Include="Hooks.cpp" />
+    <ClCompile Include="imgui.Begin.cpp" />
+    <ClCompile Include="imgui.End.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LuaHooksModule.cpp" />
+    <ClCompile Include="LuaImGuiModule.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Options.cpp" />
     <ClCompile Include="Portaudio.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="Uniforms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\packages\ImGuiColorTextEdit\TextEditor.h" />
@@ -226,6 +235,7 @@
     <ClInclude Include="..\packages\Lua\lundump.h" />
     <ClInclude Include="..\packages\Lua\lvm.h" />
     <ClInclude Include="..\packages\Lua\lzio.h" />
+    <ClInclude Include="BaseLuaModule.hpp" />
     <ClInclude Include="engine.Atan2.hpp" />
     <ClInclude Include="engine.BindTexture.hpp" />
     <ClInclude Include="engine.CheckKey.hpp" />
@@ -238,13 +248,22 @@
     <ClInclude Include="engine.SetDrawColour.hpp" />
     <ClInclude Include="engine.SetFullscreen.hpp" />
     <ClInclude Include="engine.LaunchWindow.hpp" />
+    <ClInclude Include="hooks.Add.hpp" />
+    <ClInclude Include="Hooks.hpp" />
+    <ClInclude Include="imgui.Begin.hpp" />
+    <ClInclude Include="imgui.End.hpp" />
     <ClInclude Include="Keyboard.hpp" />
     <ClInclude Include="BaseLuaFunction.hpp" />
     <ClInclude Include="EngineModule.hpp" />
+    <ClInclude Include="LuaHooksModule.hpp" />
+    <ClInclude Include="LuaImGuiModule.hpp" />
     <ClInclude Include="Menu.hpp" />
+    <ClInclude Include="Options.hpp" />
     <ClInclude Include="Portaudio.hpp" />
     <ClInclude Include="Render.hpp" />
+    <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Singleton.hpp" />
+    <ClInclude Include="Uniforms.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -254,11 +273,10 @@
     <None Include="..\runtime\lua_base\files.lua" />
     <None Include="..\runtime\lua_base\g3Lua_v1.lua" />
     <None Include="..\runtime\lua_base\game.lua" />
-    <None Include="..\runtime\lua_base\hooks.lua" />
-    <None Include="..\runtime\lua_base\main - particles.lua" />
     <None Include="..\runtime\lua_base\main.lua" />
     <None Include="..\runtime\lua_base\render.lua" />
     <None Include="..\runtime\lua_base\sdlk.lua" />
+    <None Include="..\runtime\shaders\fragment-mandel.glsl" />
     <None Include="..\runtime\shaders\fragment.glsl" />
     <None Include="..\runtime\shaders\vertex.glsl" />
   </ItemGroup>

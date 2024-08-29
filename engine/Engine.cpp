@@ -13,6 +13,9 @@
 #include "engine.LaunchWindow.hpp"
 #include "engine.CheckKey.hpp"
 
+#include "LuaImGuiModule.hpp"
+#include "LuaHooksModule.hpp"
+
 int Engine::initialiseLua(lua_State* L) {
 	// Create a new table, which will be require-able.
 	lua_newtable(L);
@@ -42,7 +45,11 @@ Engine* Engine::Init() {
 	this->m_keyboard = new Keyboard(this);
 	this->m_menu = new Menu(this);
 	this->m_render = new Render(this);
+	this->m_shaders = new Shaders(this);
+	this->m_uniforms = new Uniforms(this);
 	this->m_portaudio = new Portaudio(this);
+	this->m_hooks = new Hooks(this);
+	this->m_options = new Options(this);
 
 	// Setup the audio stream.
 	this->m_portaudio->initialise();
@@ -51,10 +58,15 @@ Engine* Engine::Init() {
 	luaL_requiref(this->m_lua_state, "engine", Engine::initialiseLua, 1);
 	lua_pop(this->m_lua_state, 1);
 
+	(&LuaImGuiModule::getInstance())->addModule(this);
+	(&LuaHooksModule::getInstance())->addModule(this);
+
 	return this;
 }
 
 void Engine::Cleanup() {
+	SDL_Quit();
+
 	this->m_portaudio->cleanup();
 }
 
@@ -80,14 +92,14 @@ Engine* Engine::LoadScript(std::string script) {
 
 Engine* Engine::Error(std::string err) {
 	printf("Error caused: %s\n", err.c_str());
-	SDL_Quit();
+	this->Cleanup();
 
 	return this;
 }
 
 Engine* Engine::LuaError(std::string trace) {
 	printf("[%s][LUA]: %s\n", trace.c_str(), lua_tostring(this->getLua(), -1));
-	SDL_Quit();
+	this->Cleanup();
 
 	return this;
 }
@@ -108,6 +120,22 @@ Render* Engine::getRender() {
 	return this->m_render;
 }
 
+Shaders* Engine::getShaders() {
+	return this->m_shaders;
+}
+
+Uniforms* Engine::getUniforms() {
+	return this->m_uniforms;
+}
+
 Portaudio* Engine::getPortaudio() {
 	return this->m_portaudio;
+}
+
+Options* Engine::getOptions() {
+	return this->m_options;
+}
+
+Hooks* Engine::getHooks() {
+	return this->m_hooks;
 }

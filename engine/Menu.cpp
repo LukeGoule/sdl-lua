@@ -8,6 +8,8 @@
 #include "../ImGui/imgui_impl_opengl3.h"
 #include "../ImGuiColorTextEdit/TextEditor.h"
 
+#include "glm/gtc/type_ptr.hpp"
+
 #include "portaudio.h"
 
 Menu::Menu(Engine* engine) : EngineModule(engine) {}
@@ -91,6 +93,23 @@ void Menu::render() {
 		this->m_pFragmentEditor->Render("Fragment Code");
 	}
 	ImGui::End();
+
+	ImGui::SetNextWindowSize(ImVec2(500, 350));
+	ImGui::Begin("Options");
+	{
+		ImGui::DragFloat("Zoom", &OPTIONS()->get()->m_fZoom, 10.f, 200.f, 20000000.f);
+		ImGui::DragFloat2("Center", glm::value_ptr(OPTIONS()->get()->m_vecCenter), 1/OPTIONS()->get()->m_fZoom, -100.f, 100.f);
+		ImGui::DragInt("Iterations", &OPTIONS()->get()->m_iIterations, 1, 10, 100000000);
+
+		ImGui::Spacing();
+		ImGui::DragFloat3("View Position", &OPTIONS()->get()->m_vecViewpos.x, 1.f, -100.f, 100.f);
+		ImGui::DragFloat("View Rotation", &OPTIONS()->get()->m_vecViewrot.x, 1.f, -180.f, 180.f);
+		ImGui::DragFloat("FOV", &OPTIONS()->get()->m_fFOV, 1.f, 45.f, 120.f);
+	}
+	ImGui::End();
+
+
+	this->m_engine->getHooks()->callHooks("render_imgui");
 
 	ImGui::Render();
 

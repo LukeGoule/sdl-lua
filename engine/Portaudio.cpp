@@ -102,6 +102,17 @@ float Portaudio::getHigh() {
     return this->m_fHighMagnitude;
 }
 
+float* Portaudio::getPLow() {
+    return &this->m_fLowMagnitude;
+}
+
+float* Portaudio::getPMid() {
+    return &this->m_fMidMagnitude;
+}
+
+float* Portaudio::getPHigh() {
+    return &this->m_fHighMagnitude;
+}
 
 float* Portaudio::getLowHistory() {
     return this->m_pLowHistory;

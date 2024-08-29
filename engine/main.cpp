@@ -8,4 +8,6 @@ int main(int argc, char** argv) {
 		->Init()
 		->LoadScript("lua_base/main.lua")
 		->Cleanup();
+
+	getchar();
 }

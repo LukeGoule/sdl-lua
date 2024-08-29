@@ -1,53 +1,52 @@
 #version 330 core
 
+out vec4 FragColor;
+
 /*
  * Input
  */
+uniform vec2 u_center;  // Center of the view in the complex plane
+uniform float u_zoom;   // Zoom factor
 uniform float m_iTime;  // Time uniform to animate the shader
 uniform vec2 m_vec2Resolution;  // Resolution of the screen
 uniform vec2 m_vec2MousePosition;
-uniform vec3 m_vec3AudioAmplitude; // x = low. y = mid. z = high.
+uniform int u_iterations;
 
-/*
- * Output
- */
-out vec4 FragColor;
+uniform float m_fLowAmplitude;
+uniform float m_fMidAmplitude;
+uniform float m_fHighAmplitude;
 
-const float PI = 3.14159265359;
-const float E = 2.718281828459;
-
-//https://iquilezles.org/articles/palettes/
-vec3 palette( float t ) {
-    vec3 a = vec3(0.5, 0.5, 0.5);
-    vec3 b = vec3(0.5, 0.5, 0.5);
-    vec3 c = vec3(1.0, 1.0, 1.0);
-    vec3 d = vec3(0.263, 0.416, 0.557);
-
-    return a + b*cos( ( PI * 2 ) * ( c * t + d ) );
-}
-
-//https://www.shadertoy.com/view/mtyGWy
 void main() {
-    vec2 uv = (gl_FragCoord.xy * 2.0 - m_vec2Resolution.xy) / m_vec2Resolution.y;
-    vec2 uv0 = uv;
-    vec3 finalColor = vec3(0.0);
+    // Map the pixel coordinates to the complex plane
+    vec2 c = (gl_FragCoord.xy - 0.5 * m_vec2Resolution) / u_zoom + u_center;
 
-    float T = m_iTime;// + m_vec3AudioAmplitude.y;
-    
-    for (float i = 0.0; i < 4.0; i++) {
-        uv = fract(uv * 1.5) - 0.5;
+    // Initialize the complex number z
+    vec2 z = vec2(0.0, 0.0);
 
-        float d = length(uv) * exp(-length(uv0));
+    // Maximum iterations and glow factor
+    float glowIntensity = -1;
 
-        vec3 col = palette(length(uv0) + i*.4 + T*.4);
+    int i;
+    float smoothColor = 0.0;
 
-        d = sin(d*8. + T)/8.;
-        d = abs(d);
-
-        d = pow(0.01 / d, 1.2);
-
-        finalColor += col * d;
-    }
+    for (i = 0; i < u_iterations; i++) {
+        // Compute z = z^2 + c in the complex plane
+        z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;
         
-    FragColor = vec4(finalColor * (m_vec3AudioAmplitude.y*800), 1.0);
+        // Check if the magnitude of z has exceeded 2
+        if (dot(z, z) > 4.0) break;
+        
+        // Calculate smooth color based on the escape time
+        smoothColor += exp(-dot(z, z) * glowIntensity);
+    }
+
+    // Normalize the smoothColor
+    smoothColor = smoothColor / float(u_iterations);
+
+    // Map the smoothColor to a glowing color gradient
+    vec3 color = vec3(smoothColor, smoothColor * 0.7, smoothColor * 0.4);
+
+
+    // Output the final color
+    FragColor = vec4(color, 1.0);
 }

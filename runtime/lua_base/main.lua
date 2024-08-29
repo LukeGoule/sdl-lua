@@ -1,31 +1,18 @@
---[[
-ReadMe:
-	Edit this file to do things, not engine.lua.
-	This file is loaded by gam3_v1.exe as the main file and engine.lua
-	is just a wrapper to make your life when coding much easier. Don't bother 
-	editing it there's nothing interesting you can do in there that you can't do here.
-]]
-
 local engine = require("engine")
+local hooks = require("hooks")
+local imgui = require("imgui")
 
 require("lua_base/files")
 require("lua_base/g3Lua_v1")
-
 
 -- tests the functions above
 local file = 'lua_base/files.lua'
 local lines = lines_from(file)
 
--- print all line numbers and their contents
---for k,v in pairs(lines) do
-  --print('line[' .. k .. ']', v)
---end
-
 local pepe = render:EmptyTexture() -- Preload an empty texture as a placeholder
 
 local WIDTH  = 1600
 local HEIGHT = 900
-local FSCREEN = false
 local RESISTANCE = 0.03
 local PI = 3.141592653589793238
 local tick = 0
@@ -69,23 +56,13 @@ for i=1,nTracers do
 	player.tracer_positions[i+1] = { x = 0, y = 0 }
 end
 
--- This hook runs during the loading of SDL and etc, but after OpenGL has loaded.
-hooks:Add("MainLoad", "Engine_LoadResources", function ()
-	--pepe = render:OpenTexture("res/pepe.png") -- Load up the "res/pepe.png" file, the data goes into the GPU's VRAM.
-
-	if (FSCREEN) then game:Fullscreen("fullscreen") end -- activate fullscreen.
-
-	-- do more things.
-end)
-
 function CalcAng(Pos0, Pos1)
 	local result = engine:Atan2(Pos0.y - Pos1.y, Pos0.x - Pos1.x)
 	result = result + (3.141592653589793238 / 2) -- Add 90deg
 	return result
 end
 
--- This hook runs each frame, all render calls should be run here.
-hooks:Add("MainRender", "Engine_Render", function ()
+function HkRender2D()
 	-- Set the colour that everything should be drawn as.
 	render:SetDrawColour(1.0, 1.0, 1.0)
 
@@ -182,7 +159,17 @@ hooks:Add("MainRender", "Engine_Render", function ()
 	-- tick.
 	tick = tick + 1
 	if tick > 1000 then tick = 0 end
-end)
+end
 
--- This function has to be called to start the game.
-game:Launch(WIDTH, HEIGHT)
+--hooks.Add("MainRender", "HkRender2D", "2DRender")
+--hooks.Add("render", "HkRender", "Handle_Render");
+--hooks.Add("load_resources", "HkLoadResources", "LoadResources")
+
+--function RenderMenu()
+--	imgui.Begin("My menu!")
+--	imgui.End()
+--end
+
+--hooks.Add("render_imgui", "RenderMenu", "RenderMenu");
+
+engine:LaunchWindow(1600, 900, "Test")

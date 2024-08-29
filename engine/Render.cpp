@@ -65,12 +65,7 @@ void Render::init2d(int widthPx, int heightPx) {
 }
 
 void Render::run2d() {
-	lua_getglobal(this->m_engine->getLua(), "Engine_LoadResources");
-
-	if (lua_pcall(this->m_engine->getLua(), 0, 0, 0) != 0) {
-		this->m_engine->Error(std::string("Engine_Render: ") + lua_tostring(this->m_engine->getLua(), -1));
-		this->m_continue = false;
-	}
+	this->m_engine->getHooks()->callHooks("load_resources");
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
@@ -87,12 +82,16 @@ void Render::run2d() {
 
 	this->m_engine->getMenu()->initOpenGL();
 
+	this->m_engine->getHooks()->callHooks("init_opengl");
+
+	constexpr float W = 1.f;
+
 	float vertices[] = {
 		// Positions         // Colors
-		 1000.f,  1000.f, 0.0f,  1.0f, 0.0f, 0.0f,  // Top Right
-		 1000.f, -1000.f, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Right
-		-1000.f, -1000.f, 0.0f,  0.0f, 0.0f, 1.0f,  // Bottom Left
-		-1000.f,  1000.f, 0.0f,  1.0f, 1.0f, 0.0f   // Top Left 
+		 W,  W, 0.0f,  1.0f, 0.0f, 0.0f,  // Top Right
+		 W, -W, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Right
+		-W, -W, 0.0f,  0.0f, 0.0f, 1.0f,  // Bottom Left
+		-W,  W, 0.0f,  1.0f, 1.0f, 0.0f   // Top Left 
 	};
 
 	unsigned int indices[] = {
@@ -101,7 +100,7 @@ void Render::run2d() {
 	};
 
 	GLuint VBO, VAO, EBO;
-	this->m_iShaderProgram = this->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
+	this->m_iShaderProgram = this->m_engine->getShaders()->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
 	
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -124,11 +123,27 @@ void Render::run2d() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
+	float u_zoom = 400.f;
+
 	// Setup transformations here
-	//float angle = glm::radians((float)(tick % 360));
-	//model = glm::rotate<float>(model, angle, glm::vec3(0.0f, 1.0f, 1.0f));
-	auto model		= glm::mat4(1.0f);
-	auto view		= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+	glm::highp_mat4 model		= glm::mat4(1.0f);
+	glm::highp_mat4 view		= glm::mat4(1.0f);
+	glm::highp_mat4 projection	= glm::highp_mat4();
+
+	UNIFORMS()
+		->addUniform(Uniforms::UniformType::FLOAT1, &OPTIONS()->get()->m_fZoom, "u_zoom")
+		->addUniform(Uniforms::UniformType::FLOAT2, &OPTIONS()->get()->m_vecCenter, "u_center")
+		->addUniform(Uniforms::UniformType::INT1, &OPTIONS()->get()->m_iIterations, "u_iterations");
+
+	UNIFORMS()
+		->addUniform(Uniforms::UniformType::MAT4, glm::value_ptr(model), "m_mat4Model")
+		->addUniform(Uniforms::UniformType::MAT4, glm::value_ptr(view), "m_mat4View")
+		->addUniform(Uniforms::UniformType::MAT4, glm::value_ptr(projection), "m_mat4Projection");
+
+	UNIFORMS()
+		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPLow(), "m_fLowAmplitude")
+		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPMid(), "m_fMidAmplitude")
+		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPHigh(), "m_fHighAmplitude");
 
 	while (this->m_continue) {
 		SDL_Event* currEvents = new SDL_Event;
@@ -152,46 +167,41 @@ void Render::run2d() {
 		int mx = 0, my = 0;
 		SDL_GetMouseState(&mx, &my);
 
-		auto projection = glm::perspective(glm::radians(45.0f), (float)this->m_screen_w / (float)this->m_screen_h, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(OPTIONS()->get()->m_fFOV), (float)this->m_screen_w / (float)this->m_screen_h, 0.1f, 100.0f);
 
 		glViewport(0, 0, this->m_screen_w, this->m_screen_h);
 		glOrtho(0, this->m_screen_w, this->m_screen_h, 0, -1, 1);
 
+		float angleX = glm::radians(OPTIONS()->get()->m_vecViewrot.x),
+			angleY = glm::radians(OPTIONS()->get()->m_vecViewrot.y),
+			angleZ = glm::radians(OPTIONS()->get()->m_vecViewrot.z);
+
+		model = glm::rotate<float>(glm::mat4(1.f), angleX, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate<float>(model, angleY, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate<float>(model, angleZ, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		view = glm::translate(glm::mat4(1.0f), OPTIONS()->get()->m_vecViewpos);
+
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+
 		glUseProgram(this->m_iShaderProgram);
 
-		GLuint modelLoc = glGetUniformLocation(this->m_iShaderProgram, "m_mat4Model");
-		GLuint viewLoc = glGetUniformLocation(this->m_iShaderProgram, "m_mat4View");
-		GLuint projLoc = glGetUniformLocation(this->m_iShaderProgram, "m_mat4Projection");
 		GLuint timeLoc = glGetUniformLocation(this->m_iShaderProgram, "m_iTime");
 		GLuint resolutionLoc = glGetUniformLocation(this->m_iShaderProgram, "m_vec2Resolution");
 		GLuint mousePosLoc = glGetUniformLocation(this->m_iShaderProgram, "m_vec2MousePosition");
-
-		GLuint audioAmpsLoc = glGetUniformLocation(this->m_iShaderProgram, "m_vec3AudioAmplitude");
-
+		
 		glUniform1f(timeLoc, currentTime);
 		glUniform2f(resolutionLoc, (float)this->m_screen_w, (float)this->m_screen_h);
 		glUniform2f(mousePosLoc, (float)mx, (float)my);
 
-		glUniform3f(audioAmpsLoc, 
-			this->m_engine->getPortaudio()->getLow(),
-			this->m_engine->getPortaudio()->getMid(), 
-			this->m_engine->getPortaudio()->getHigh()
-		);
-
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		this->m_engine->getUniforms()->setOpenGLUniforms(this->m_iShaderProgram);
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		//lua_getglobal(this->m_engine->getLua(), "Engine_Render");
-
-		//if (lua_pcall(this->m_engine->getLua(), 0, 0, 0) != 0) {
-		//	printf("[LUA], Engine_Render: %s\n", lua_tostring(this->m_engine->getLua(), -1));
-		//	this->m_continue = false;
-		//}
-		
+		this->m_engine->getHooks()->callHooks("render");
 
 		// recompile shaders when F2 is pressed.
 		if (this->m_engine->getKeyboard()->checkState(SDLK_F2)) {
@@ -219,9 +229,8 @@ void Render::run2d() {
 		}
 
 		this->m_engine->getMenu()->render();
-
-		
 		SDL_GL_SwapWindow(this->m_window);
+		this->m_engine->getHooks()->callHooks("post_render");
 	}
 }
 
@@ -239,51 +248,8 @@ void Render::recompileShaders(bool bFromFiles) {
 		this->m_sFragment = this->m_engine->getMenu()->getFragmentEditor()->GetText();
 	}
 
-	this->m_iShaderProgram = this->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
+	this->m_iShaderProgram = this->m_engine->getShaders()->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
 }
-
-
-GLuint Render::compileShader(GLenum type, const char* szCode) {
-	GLuint shader = glCreateShader(type);
-	glShaderSource(shader, 1, &szCode, nullptr);
-	glCompileShader(shader);
-
-	GLint success;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	
-	if (!success) {
-		char infoLog[512];
-		glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-		std::cerr << "Shader Compilation Failed: " << infoLog << std::endl; // todo
-	}
-
-	return shader;
-}
-
-GLuint Render::compileShaderProgram(const char* szVertexShader, const char* szFragmentShader) {
-	GLuint vertexShader = compileShader(GL_VERTEX_SHADER, szVertexShader);
-	GLuint fragmentShader = compileShader(GL_FRAGMENT_SHADER, szFragmentShader);
-
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	GLint success;
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		char infoLog[512];
-		glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-		std::cerr << "Shader Program Linking Failed: " << infoLog << std::endl; // todo
-	}
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-	return shaderProgram;
-}
-
-
 
 
 int Render::getFullscreenMode() {

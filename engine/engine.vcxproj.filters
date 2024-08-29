@@ -58,6 +58,12 @@
     <Filter Include="Packages\ImGuiColorTextEdit">
       <UniqueIdentifier>{a592b486-788b-422f-ad93-22f6cdb47e40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Lua\Modules">
+      <UniqueIdentifier>{4303f81a-4841-412c-b596-d15632ddca33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Lua\Modules">
+      <UniqueIdentifier>{bb07cb8d-9dec-49c3-82c9-ace67493d71f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -249,6 +255,33 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files\Engine\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="LuaImGuiModule.cpp">
+      <Filter>Source Files\Engine\Lua\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaHooksModule.cpp">
+      <Filter>Source Files\Engine\Lua\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks.Add.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.End.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.Begin.cpp">
+      <Filter>Source Files\Engine\Lua\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Uniforms.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Options.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseLuaFunction.hpp">
@@ -416,6 +449,36 @@
     <ClInclude Include="Menu.hpp">
       <Filter>Header Files\Engine\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="BaseLuaModule.hpp">
+      <Filter>Header Files\Engine\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaImGuiModule.hpp">
+      <Filter>Header Files\Engine\Lua\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaHooksModule.hpp">
+      <Filter>Header Files\Engine\Lua\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks.Add.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.Begin.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.End.hpp">
+      <Filter>Header Files\Engine\Lua\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniforms.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Options.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -427,12 +490,6 @@
       <Filter>Resource Files\Lua Src</Filter>
     </None>
     <None Include="..\runtime\lua_base\game.lua">
-      <Filter>Resource Files\Lua Src</Filter>
-    </None>
-    <None Include="..\runtime\lua_base\hooks.lua">
-      <Filter>Resource Files\Lua Src</Filter>
-    </None>
-    <None Include="..\runtime\lua_base\main - particles.lua">
       <Filter>Resource Files\Lua Src</Filter>
     </None>
     <None Include="..\runtime\lua_base\main.lua">
@@ -454,6 +511,9 @@
       <Filter>Packages\Lua</Filter>
     </None>
     <None Include="..\README.md" />
+    <None Include="..\runtime\shaders\fragment-mandel.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\LICENSEINFO.txt" />

@@ -14,6 +14,20 @@
 #include "Singleton.hpp"
 #include "Portaudio.hpp"
 #include "Menu.hpp"
+#include "Hooks.hpp"
+#include "Shaders.hpp"
+#include "Uniforms.hpp"
+#include "Options.hpp"
+
+#define LUA() (&Engine::getInstance())->getLua()
+#define KEYBOARD() (&Engine::getInstance())->getKeyboard()
+#define MENU() (&Engine::getInstance())->getMenu()
+#define RENDER() (&Engine::getInstance())->getRender()
+#define SHADERS() (&Engine::getInstance())->getShaders()
+#define UNIFORMS() (&Engine::getInstance())->getUniforms()
+#define PORTAUDIO() (&Engine::getInstance())->getPortaudio()
+#define HOOKS() (&Engine::getInstance())->getHooks()
+#define OPTIONS() (&Engine::getInstance())->getOptions()
 
 /*
  * The render/game/lua/experiment "engine" object. This is a singleton so please do not manually instanciate.
@@ -41,9 +55,26 @@ private:
 	Render* m_render = nullptr;
 
 	/*
+	 * OpenGL shaders controller.
+	 */
+	Shaders* m_shaders = nullptr;
+
+	/*
+	 * OpenGL uniforms controller.
+	 */
+	Uniforms* m_uniforms = nullptr;
+
+	/*
 	 * Audio controller.
 	 */
 	Portaudio* m_portaudio = nullptr;
+
+	/*
+	 * Audio controller.
+	 */
+	Hooks* m_hooks = nullptr;
+
+	Options* m_options = nullptr;
 
 public:
 
@@ -68,9 +99,29 @@ public:
 	Render* getRender();
 
 	/*
+	 * Returns the pointer to the immutable shaders controller.
+	 */
+	Shaders* getShaders();
+
+	/*
+	 * Returns the pointer to the immutable uniforms controller.
+	 */
+	Uniforms* getUniforms();
+
+	/*
 	 * Returns the pointer to the immutable audio controller.
 	 */
 	Portaudio* getPortaudio();
+
+	/*
+	 * Returns the pointer to the immutable options controller.
+	 */
+	Options* getOptions();
+
+	/*
+	 * Returns the pointer to the immutable hooks controller.
+	 */
+	Hooks* getHooks();
 
 	/*
 	 * Setup Lua.

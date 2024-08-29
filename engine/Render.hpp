@@ -109,16 +109,6 @@ public:
 	void recompileShaders(bool bFromFiles = false);
 
 	/*
-	 * Compile an OpenGL shader (GLSL).
-	 */
-	GLuint compileShader(GLenum type, const char* szCode);
-
-	/*
-	 * Compile a full OpenGL shader program (GLSL).
-	 */
-	GLuint compileShaderProgram(const char* szVertexShader, const char* szFragmentShader);
-
-	/*
 	 * Returns the SDL fullscreen integer.
 	 */
 	int getFullscreenMode();

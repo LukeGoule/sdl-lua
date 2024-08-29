@@ -75,6 +75,21 @@ public:
 	 */
 	float getHigh();
 
+	/*
+	 * Get low end amp pointer.
+	 */
+	float* getPLow();
+
+	/*
+	 * Get mid end amp pointer.
+	 */
+	float* getPMid();
+
+	/*
+	 * Get high end amp pointer.
+	 */
+	float* getPHigh();
+
 
 	/*
 	 * Get low end amp.
