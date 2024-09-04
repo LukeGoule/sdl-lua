@@ -8,9 +8,11 @@
 
 #include <SDL.h>
 #include <iostream>
+#include <vector>
 
 struct SDL_Window;
 class TextEditor;
+class Renderable;
 
 /*
  * Render controller class. This holds the state of OpenGL, and the window, and the bindings between such.
@@ -61,6 +63,21 @@ private:
 	 * Handle to current compiled shader program.
 	 */
 	GLuint m_iShaderProgram;
+	
+	/*
+	 * Delta time.
+	 */
+	float m_fDeltaTime = 0.0f;
+
+	/*
+	 * Last time.
+	 */
+	float m_fLastFrame = 0.0f;
+
+	/*
+	 * Renderable objects.
+	 */
+	std::vector<Renderable*> m_vecRenderables;
 
 public:
 	/*
@@ -143,6 +160,11 @@ public:
 	 * Gets the fragment shader code.
 	 */
 	std::string getFragmentShaderCode();
+
+	/*
+	 * Get the shader program ID.
+	 */
+	int getShaderProgram();
 };
 
 #endif

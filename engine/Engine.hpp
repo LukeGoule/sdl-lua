@@ -18,6 +18,7 @@
 #include "Shaders.hpp"
 #include "Uniforms.hpp"
 #include "Options.hpp"
+#include "Camera.hpp"
 
 #define LUA() (&Engine::getInstance())->getLua()
 #define KEYBOARD() (&Engine::getInstance())->getKeyboard()
@@ -28,6 +29,7 @@
 #define PORTAUDIO() (&Engine::getInstance())->getPortaudio()
 #define HOOKS() (&Engine::getInstance())->getHooks()
 #define OPTIONS() (&Engine::getInstance())->getOptions()
+#define CAMERA() (&Engine::getInstance())->getCamera()
 
 /*
  * The render/game/lua/experiment "engine" object. This is a singleton so please do not manually instanciate.
@@ -74,8 +76,15 @@ private:
 	 */
 	Hooks* m_hooks = nullptr;
 
+	/*
+	 * Options controller.
+	 */
 	Options* m_options = nullptr;
 
+	/*
+	 * Camera controller.
+	 */
+	Camera* m_camera = nullptr;
 public:
 
 	/*
@@ -122,6 +131,11 @@ public:
 	 * Returns the pointer to the immutable hooks controller.
 	 */
 	Hooks* getHooks();
+
+	/*
+	 * Returns the pointer to the immutable camera controller.
+	 */
+	Camera* getCamera();
 
 	/*
 	 * Setup Lua.

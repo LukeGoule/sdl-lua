@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "Renderable.hpp"
 
 #include "../ImGuiColorTextEdit/TextEditor.h"
 
@@ -76,52 +77,33 @@ void Render::run2d() {
 	// V-Sync
 	SDL_GL_SetSwapInterval(1);
 
-	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_3D);
+	//glBindTexture(GL_TEXTURE_2D, textureID);
 	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	// Set up face culling
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);  // Cull back faces
+
+	//glFrontFace(GL_CW);
 
 	this->m_engine->getMenu()->initOpenGL();
 
 	this->m_engine->getHooks()->callHooks("init_opengl");
 
-	constexpr float W = 1.f;
-
-	float vertices[] = {
-		// Positions         // Colors
-		 W,  W, 0.0f,  1.0f, 0.0f, 0.0f,  // Top Right
-		 W, -W, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Right
-		-W, -W, 0.0f,  0.0f, 0.0f, 1.0f,  // Bottom Left
-		-W,  W, 0.0f,  1.0f, 1.0f, 0.0f   // Top Left 
-	};
-
-	unsigned int indices[] = {
-		0, 1, 3,
-		1, 2, 3
-	};
-
-	GLuint VBO, VAO, EBO;
 	this->m_iShaderProgram = this->m_engine->getShaders()->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
 	
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	for (size_t i = 0; i < 10; i++)
+	{
+		for (size_t j = 0; j < 10; j++) {
+			this->m_vecRenderables.push_back((new Renderable)->setPosition(glm::vec3(-5.f + (float)i, -1.f, -5.f + (float)j))->bindBuffers());
+		}
+	}
 
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,0.f })->bindBuffers(std::string("res/models/teapot.obj")));
+	
 
 	float u_zoom = 400.f;
 
@@ -145,10 +127,22 @@ void Render::run2d() {
 		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPMid(), "m_fMidAmplitude")
 		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPHigh(), "m_fHighAmplitude");
 
+	glm::vec3 lightPos = { 0.f, 2.f, 0.f };
+	glm::vec3 lightColour = { 1.f, 1.f, 1.f };
+
+	UNIFORMS()
+		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(lightPos), "lightPos")
+		->addUniform(Uniforms::UniformType::FLOAT3, CAMERA()->getPositionPtr(), "viewPos")
+		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(lightColour), "lightColor");
+
+	// Enable mouse lock
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+
 	while (this->m_continue) {
 		SDL_Event* currEvents = new SDL_Event;
 		while (SDL_PollEvent(currEvents)) {
-			this->m_engine->getMenu()->handleSDLEvent(currEvents);
+			MENU()->handleSDLEvent(currEvents);
+			CAMERA()->handleSDLEvent(currEvents);
 
 			switch (currEvents->type) {
 			case SDL_EventType::SDL_QUIT: // app quit signal.
@@ -164,6 +158,11 @@ void Render::run2d() {
 		}
 
 		float currentTime = SDL_GetTicks() / 1000.0f; // Time in seconds
+		this->m_fDeltaTime = currentTime - this->m_fLastFrame;
+		this->m_fLastFrame = currentTime;
+
+		CAMERA()->processKeyboard(this->m_fDeltaTime);
+		
 		int mx = 0, my = 0;
 		SDL_GetMouseState(&mx, &my);
 
@@ -180,12 +179,11 @@ void Render::run2d() {
 		model = glm::rotate<float>(model, angleY, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate<float>(model, angleZ, glm::vec3(0.0f, 1.0f, 0.0f));
 
-		view = glm::translate(glm::mat4(1.0f), OPTIONS()->get()->m_vecViewpos);
+		view = CAMERA()->getViewMatrix();
 
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-
 		glUseProgram(this->m_iShaderProgram);
 
 		GLuint timeLoc = glGetUniformLocation(this->m_iShaderProgram, "m_iTime");
@@ -198,8 +196,9 @@ void Render::run2d() {
 
 		this->m_engine->getUniforms()->setOpenGLUniforms(this->m_iShaderProgram);
 
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		for (const auto pRenderable : this->m_vecRenderables) {
+			pRenderable->renderBuffers();
+		}
 
 		this->m_engine->getHooks()->callHooks("render");
 
@@ -282,4 +281,8 @@ std::string Render::getVertexShaderCode() {
 
 std::string Render::getFragmentShaderCode() {
 	return this->m_sFragment;
+}
+
+int Render::getShaderProgram() {
+	return this->m_iShaderProgram;
 }

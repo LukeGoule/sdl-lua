@@ -81,7 +81,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\packages\SDL\include;$(ProjectDir)\..\packages\GLM;$(ProjectDir)\..\packages\GLEW\include\GL;$(ProjectDir)\..\packages\Portaudio\include;$(ProjectDir)\..\packages\Lua;$(ProjectDir)\..\packages\FFTW3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\packages\SDL\lib\x86;$(ProjectDir)\..\packages\GLEW\lib\x86;$(ProjectDir)\..\packages\Portaudio\lib;$(ProjectDir)\..\packages\FFTW3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -171,6 +171,7 @@
     <ClCompile Include="..\packages\Lua\lutf8lib.c" />
     <ClCompile Include="..\packages\Lua\lvm.c" />
     <ClCompile Include="..\packages\Lua\lzio.c" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="engine.Atan2.cpp" />
     <ClCompile Include="engine.BindTexture.cpp" />
     <ClCompile Include="engine.CheckKey.cpp" />
@@ -183,8 +184,10 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="engine.SetDrawColour.cpp" />
     <ClCompile Include="engine.SetFullscreen.cpp" />
+    <ClCompile Include="fast_obj.cpp" />
     <ClCompile Include="hooks.Add.cpp" />
     <ClCompile Include="Hooks.cpp" />
+    <ClCompile Include="IHasUUID.hpp" />
     <ClCompile Include="imgui.Begin.cpp" />
     <ClCompile Include="imgui.End.cpp" />
     <ClCompile Include="Keyboard.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Portaudio.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Uniforms.cpp" />
   </ItemGroup>
@@ -236,6 +240,7 @@
     <ClInclude Include="..\packages\Lua\lvm.h" />
     <ClInclude Include="..\packages\Lua\lzio.h" />
     <ClInclude Include="BaseLuaModule.hpp" />
+    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="engine.Atan2.hpp" />
     <ClInclude Include="engine.BindTexture.hpp" />
     <ClInclude Include="engine.CheckKey.hpp" />
@@ -248,6 +253,7 @@
     <ClInclude Include="engine.SetDrawColour.hpp" />
     <ClInclude Include="engine.SetFullscreen.hpp" />
     <ClInclude Include="engine.LaunchWindow.hpp" />
+    <ClInclude Include="fast_obj.h" />
     <ClInclude Include="hooks.Add.hpp" />
     <ClInclude Include="Hooks.hpp" />
     <ClInclude Include="imgui.Begin.hpp" />
@@ -261,6 +267,7 @@
     <ClInclude Include="Options.hpp" />
     <ClInclude Include="Portaudio.hpp" />
     <ClInclude Include="Render.hpp" />
+    <ClInclude Include="Renderable.hpp" />
     <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="Uniforms.hpp" />

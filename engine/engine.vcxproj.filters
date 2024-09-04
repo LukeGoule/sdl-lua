@@ -64,6 +64,18 @@
     <Filter Include="Source Files\Engine\Lua\Modules">
       <UniqueIdentifier>{bb07cb8d-9dec-49c3-82c9-ace67493d71f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Objects">
+      <UniqueIdentifier>{4ec63f23-32f5-4c8d-a9df-44576cbeb827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Objects">
+      <UniqueIdentifier>{d17f9607-c3bc-46c8-9ff7-9adba110be9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Render">
+      <UniqueIdentifier>{42f35eae-7796-451b-bd36-4153c6618a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Interfaces">
+      <UniqueIdentifier>{846f8553-ada5-43b0-a815-86104199142c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -282,6 +294,18 @@
     <ClCompile Include="Options.cpp">
       <Filter>Source Files\Engine\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Renderable.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="fast_obj.cpp">
+      <Filter>Source Files\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="IHasUUID.hpp">
+      <Filter>Header Files\Engine\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseLuaFunction.hpp">
@@ -478,6 +502,15 @@
     </ClInclude>
     <ClInclude Include="Options.hpp">
       <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.hpp">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>Header Files\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="fast_obj.h">
+      <Filter>Header Files\Engine\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,7 @@ Engine* Engine::Init() {
 	this->m_portaudio = new Portaudio(this);
 	this->m_hooks = new Hooks(this);
 	this->m_options = new Options(this);
+	this->m_camera = new Camera(this);
 
 	// Setup the audio stream.
 	this->m_portaudio->initialise();
@@ -138,4 +139,8 @@ Options* Engine::getOptions() {
 
 Hooks* Engine::getHooks() {
 	return this->m_hooks;
+}
+
+Camera* Engine::getCamera() {
+	return this->m_camera;
 }

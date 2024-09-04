@@ -70,6 +70,11 @@ public:
 	 * Method to set the values of the uniforms prior to the execution of the shader program.
 	 */
 	void setOpenGLUniforms(GLuint iShaderProgram);
+
+	/*
+	 * setOpenGLUniforms calls this in bulk.
+	 */
+	void setSingleUniform(GLuint iShaderProgram, Uniforms::Uniform_t* pUniform);
 };
 
 #endif // !UNIFORMS_HPP

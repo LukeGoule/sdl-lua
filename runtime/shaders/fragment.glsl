@@ -5,6 +5,12 @@ out vec4 FragColor;
 /*
  * Input
  */
+
+in vec3 FragPos;  // Position of the fragment
+in vec3 Normal;   // Normal of the fragment
+in vec3 m_vec3Colour;
+in vec3 m_vec3Texcoord;
+
 uniform vec2 u_center;  // Center of the view in the complex plane
 uniform float u_zoom;   // Zoom factor
 uniform float m_iTime;  // Time uniform to animate the shader
@@ -16,37 +22,37 @@ uniform float m_fLowAmplitude;
 uniform float m_fMidAmplitude;
 uniform float m_fHighAmplitude;
 
+uniform vec3 lightPos;   // Position of the light source
+uniform vec3 viewPos;    // Position of the camera/viewer
+uniform vec3 lightColor; // Color of the light source
+
+uniform sampler2D textureS; // Texture sampler
+
 void main() {
-    // Map the pixel coordinates to the complex plane
-    vec2 c = (gl_FragCoord.xy - 0.5 * m_vec2Resolution) / u_zoom + u_center;
+    // Ambient lighting
+    float ambientStrength = 0.3;
+    vec3 ambient = ambientStrength * lightColor;
 
-    // Initialize the complex number z
-    vec2 z = vec2(0.0, 0.0);
+    // Diffuse lighting
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
 
-    // Maximum iterations and glow factor
-    float glowIntensity = -1;
+    // Specular lighting
+    float specularStrength = 0.1;
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = specularStrength * spec * lightColor;
 
-    int i;
-    float smoothColor = 0.0;
+    // Combine lighting results
+    vec3 result = ambient + diffuse + specular;
+    
+    // Sample the texture
+    //vec4 texColor = texture(textureS, m_vec3Texcoord);
 
-    for (i = 0; i < u_iterations; i++) {
-        // Compute z = z^2 + c in the complex plane
-        z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;
-        
-        // Check if the magnitude of z has exceeded 2
-        if (dot(z, z) > 4.0) break;
-        
-        // Calculate smooth color based on the escape time
-        smoothColor += exp(-dot(z, z) * glowIntensity);
-    }
-
-    // Normalize the smoothColor
-    smoothColor = smoothColor / float(u_iterations);
-
-    // Map the smoothColor to a glowing color gradient
-    vec3 color = vec3(smoothColor, smoothColor * 0.7, smoothColor * 0.4);
-
-
-    // Output the final color
-    FragColor = vec4(color, 1.0);
+    // Final colour: combine texture colour with lighting
+    //FragColor = vec4(result * texColor.rgb, texColor.a);
+    FragColor = vec4(result, 1.f);
 }
