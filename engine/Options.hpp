@@ -28,6 +28,8 @@ private:
 
 		glm::vec3 m_vecViewpos = glm::vec3(0.0f, 0.0f, -3.0f);
 		glm::vec3 m_vecViewrot = glm::vec3(0.f, 0.f, 0.f);
+		glm::vec3 m_lightPosition = glm::vec3(1.f, 1.f, 1.f);
+		glm::vec3 m_lightColour = glm::vec3(.5f, .5f, .5f);
 	};
 
 	Options::Options_t* m_pOptions = nullptr;

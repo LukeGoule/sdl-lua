@@ -46,6 +46,7 @@ private:
     float pitch;
     float speed;
     float sensitivity;
+    bool locked = true;
 
     /*
      * Process mouse movement delta.

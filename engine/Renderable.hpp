@@ -7,24 +7,32 @@
 #include <glm/vec3.hpp>
 #include <glew.h>
 #include <glm/glm.hpp>
+#include "fast_obj.h"
 
 #include "IHasUUID.hpp"
 
 class Renderable : public IHasUUID {
 private:
 
-	glm::vec3 m_position = { 0.0, 0.0, 0.0 };
-	glm::vec3 m_rotation = { 0.0, 0.0, 0.0 };
+	glm::vec3 m_position = { 0.0f, 0.0f, 0.0f };
+	glm::vec3 m_rotation = { 0.0f, 0.0f, 0.0f };
+	glm::vec3 m_scale = { 1.0f, 1.0f, 1.0f };
 
-	std::vector<float> m_vertices;
-	std::vector<unsigned int> m_indices;
+	struct Object {
+		std::vector<float> m_vecVertices;
+		std::vector<unsigned int> m_vecIndices;
+
+		GLuint
+			VBO = 0, // Vertex buffer object.
+			VAO = 0, // Vertex array object
+			EBO = 0; // Element buffer object.
+
+		const fastObjMaterial* m_pMaterial = nullptr;
+	};
+
+	std::vector<Renderable::Object*> m_vecObjects;
 
 	glm::mat4 m_matrix;
-
-	GLuint
-		VBO = 0, // Vertex buffer object.
-		VAO = 0, // Vertex array object
-		EBO = 0; // Element buffer object.
 
 	const char* m_szUUID;
 
@@ -40,10 +48,15 @@ public:
 
 	Renderable* setRotation(glm::vec3 rot);
 
+	Renderable* setScale(glm::vec3 scale);
+
 	glm::vec3 getPosition();
 
 	glm::vec3 getRotation();
 
+	glm::vec3 getScale();
+
+	
 	const char* getUUID();
 };
 

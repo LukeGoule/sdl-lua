@@ -104,6 +104,8 @@ void Menu::render() {
 		ImGui::Spacing();
 		ImGui::DragFloat3("View Position", &OPTIONS()->get()->m_vecViewpos.x, 1.f, -100.f, 100.f);
 		ImGui::DragFloat("View Rotation", &OPTIONS()->get()->m_vecViewrot.x, 1.f, -180.f, 180.f);
+		ImGui::DragFloat3("Light Position", &OPTIONS()->get()->m_lightPosition.x, .1f, -5.f, 5.f);
+		ImGui::DragFloat3("Light Colour", &OPTIONS()->get()->m_lightColour.x, .1f, -5.f, 5.f);
 		ImGui::DragFloat("FOV", &OPTIONS()->get()->m_fFOV, 1.f, 45.f, 120.f);
 	}
 	ImGui::End();

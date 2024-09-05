@@ -22,6 +22,10 @@ void Camera::handleSDLEvent(SDL_Event* pEvent) {
 }
 
 void Camera::processMouseMovement(float xOffset, float yOffset) {
+    if (this->locked) {
+        return;
+    }
+
     xOffset *= this->sensitivity;
     yOffset *= -this->sensitivity;
 
@@ -47,34 +51,39 @@ void Camera::processKeyboard(float deltaTime) {
 
     const auto pKeyboard = KEYBOARD();
 
-    if (pKeyboard->checkState(SDLK_w)) {
-        this->position += this->front * velocity;
-    }
+    if (!this->locked) {
 
-    if (pKeyboard->checkState(SDLK_s)) {
-        this->position -= this->front * velocity;
-    }
+        if (pKeyboard->checkState(SDLK_w)) {
+            this->position += this->front * velocity;
+        }
 
-    if (pKeyboard->checkState(SDLK_a)) {
-        this->position -= glm::normalize(glm::cross(this->front, this->up)) * velocity;
-    }
+        if (pKeyboard->checkState(SDLK_s)) {
+            this->position -= this->front * velocity;
+        }
 
-    if (pKeyboard->checkState(SDLK_d)) {
-        this->position += glm::normalize(glm::cross(this->front, this->up)) * velocity;
-    }
+        if (pKeyboard->checkState(SDLK_a)) {
+            this->position -= glm::normalize(glm::cross(this->front, this->up)) * velocity;
+        }
 
-    if (pKeyboard->checkState(SDLK_LSHIFT)) {
-        this->speed = 10.f;
-    }
-    else {
-        this->speed = 2.5f;
+        if (pKeyboard->checkState(SDLK_d)) {
+            this->position += glm::normalize(glm::cross(this->front, this->up)) * velocity;
+        }
+
+        if (pKeyboard->checkState(SDLK_LSHIFT)) {
+            this->speed = 10.f;
+        }
+        else {
+            this->speed = 2.5f;
+        }
     }
 
     if (KEYBOARD()->checkState(SDLK_F5)) {
         SDL_SetRelativeMouseMode(SDL_TRUE);
+        this->locked = false;
     }
     else if (KEYBOARD()->checkState(SDLK_F6)) {
         SDL_SetRelativeMouseMode(SDL_FALSE);
+        this->locked = true;
     }
 }
 

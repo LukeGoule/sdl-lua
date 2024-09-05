@@ -98,12 +98,14 @@ void Render::run2d() {
 	for (size_t i = 0; i < 10; i++)
 	{
 		for (size_t j = 0; j < 10; j++) {
-			this->m_vecRenderables.push_back((new Renderable)->setPosition(glm::vec3(-5.f + (float)i, -1.f, -5.f + (float)j))->bindBuffers());
+			//this->m_vecRenderables.push_back((new Renderable)->setPosition(glm::vec3(-5.f + (float)i, -3.f, -5.f + (float)j))->bindBuffers());
 		}
 	}
+	//this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->bindBuffers(std::string("res/models/cube.obj")));
+	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,0.f })->bindBuffers(std::string("res/models/directions.obj")));
+	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->bindBuffers(std::string("res/models/plane.obj")));
+	//this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,1.f,0.f })->bindBuffers(std::string("res/models/teapot.obj")));
 
-	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,0.f })->bindBuffers(std::string("res/models/teapot.obj")));
-	
 
 	float u_zoom = 400.f;
 
@@ -127,16 +129,13 @@ void Render::run2d() {
 		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPMid(), "m_fMidAmplitude")
 		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPHigh(), "m_fHighAmplitude");
 
-	glm::vec3 lightPos = { 0.f, 2.f, 0.f };
-	glm::vec3 lightColour = { 1.f, 1.f, 1.f };
-
 	UNIFORMS()
-		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(lightPos), "lightPos")
+		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(OPTIONS()->get()->m_lightPosition), "lightPos")
 		->addUniform(Uniforms::UniformType::FLOAT3, CAMERA()->getPositionPtr(), "viewPos")
-		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(lightColour), "lightColor");
+		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(OPTIONS()->get()->m_lightColour), "lightColor");
 
 	// Enable mouse lock
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 
 	while (this->m_continue) {
 		SDL_Event* currEvents = new SDL_Event;

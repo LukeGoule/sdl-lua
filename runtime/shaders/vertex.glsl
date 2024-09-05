@@ -1,8 +1,9 @@
 #version 330 core
 
 layout(location = 0) in vec3 m_vec3InPosition;
-layout(location = 1) in vec3 m_vec3Texcoord_in;
-layout(location = 2) in vec3 m_vec3Normal;
+layout(location = 1) in vec3 m_vec3InColour;
+layout(location = 2) in vec3 m_vec3Texcoord_in;
+layout(location = 3) in vec3 m_vec3Normal;
 
 out vec3 FragPos;       // Position of the fragment in world space
 out vec3 m_vec3Colour;  // Pass the color to fragment shader
@@ -18,7 +19,7 @@ void main() {
     FragPos = vec3(m_mat4Model * vec4(m_vec3InPosition, 1.0));
     
     // Pass the color to the fragment shader
-    m_vec3Colour = vec3(1.0,1.0,1.0);
+    m_vec3Colour = m_vec3InColour;
 
     // Pass the texcoord.
     m_vec3Texcoord = m_vec3Texcoord_in;
