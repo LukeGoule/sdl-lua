@@ -1,23 +1,26 @@
 #include "Renderable.hpp"
 #include "Engine.hpp"
-#include "fast_obj.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-Renderable::Renderable() {
+Renderable::Renderable(const char* szModel) {
     this->m_matrix = glm::mat4(1.f);
     this->m_szUUID = "hi";
+
+    if (szModel) {
+        this->setModel(szModel);
+    }
 }
 
-Renderable* Renderable::bindBuffers(std::string model) {
-    fastObjMesh* mesh = fast_obj_read(model.c_str());
+Renderable* Renderable::bindBuffers() {
+    if (!this->m_pMesh) {
+        throw new std::exception("Mesh not set when attempting to bind buffer objects.");
+    }
     
-    std::cout << "Loading mesh: " << model << std::endl;
-
-    for (size_t i = 0; i < mesh->object_count; i++) {
-        const auto object = &mesh->objects[i];
-        const auto material = (fastObjMaterial*) (&mesh->materials[i]);
+    for (size_t i = 0; i < this->m_pMesh->object_count; i++) {
+        const auto object = &this->m_pMesh->objects[i];
+        const auto material = (fastObjMaterial*) (&this->m_pMesh->materials[i]);
 
         if (object->name) {
             std::cout << "\t- Loading object: " << object->name << std::endl;
@@ -47,17 +50,17 @@ Renderable* Renderable::bindBuffers(std::string model) {
         }
 
         for (unsigned int i = 0; i < object->face_count; i++) {
-            unsigned int face_vertex_count = mesh->face_vertices[face_offset + i]; // Use face_offset for correct indexing
+            unsigned int face_vertex_count = this->m_pMesh->face_vertices[face_offset + i]; // Use face_offset for correct indexing
 
             for (unsigned int j = 0; j < face_vertex_count; j++) {
-                const auto indexInfo = &mesh->indices[index_offset + j];
+                const auto indexInfo = &this->m_pMesh->indices[index_offset + j];
                 unsigned int index = indexInfo->p;
                 newObject->m_vecIndices.push_back(newObject->m_vecIndices.size());
 
                 // Add vertex positions
-                newObject->m_vecVertices.push_back(mesh->positions[index * 3 + 0] * this->m_scale.x);
-                newObject->m_vecVertices.push_back(mesh->positions[index * 3 + 1] * this->m_scale.x);
-                newObject->m_vecVertices.push_back(mesh->positions[index * 3 + 2] * this->m_scale.x);
+                newObject->m_vecVertices.push_back(this->m_pMesh->positions[index * 3 + 0] * this->m_scale.x);
+                newObject->m_vecVertices.push_back(this->m_pMesh->positions[index * 3 + 1] * this->m_scale.x);
+                newObject->m_vecVertices.push_back(this->m_pMesh->positions[index * 3 + 2] * this->m_scale.x);
 
                 newObject->m_vecVertices.push_back(1.f);
                 newObject->m_vecVertices.push_back(1.f);
@@ -65,15 +68,15 @@ Renderable* Renderable::bindBuffers(std::string model) {
 
                 // Add texture coordinates (if available)
                 if (indexInfo->t != -1) {
-                    newObject->m_vecVertices.push_back(mesh->texcoords[indexInfo->t * 2 + 0]);
-                    newObject->m_vecVertices.push_back(mesh->texcoords[indexInfo->t * 2 + 1]);
+                    newObject->m_vecVertices.push_back(this->m_pMesh->texcoords[indexInfo->t * 2 + 0]);
+                    newObject->m_vecVertices.push_back(this->m_pMesh->texcoords[indexInfo->t * 2 + 1]);
                 }
 
                 // Add normals (if available)
                 if (indexInfo->n != -1) {
-                    newObject->m_vecVertices.push_back(mesh->normals[indexInfo->n * 3 + 0]);
-                    newObject->m_vecVertices.push_back(mesh->normals[indexInfo->n * 3 + 1]);
-                    newObject->m_vecVertices.push_back(mesh->normals[indexInfo->n * 3 + 2]);
+                    newObject->m_vecVertices.push_back(this->m_pMesh->normals[indexInfo->n * 3 + 0]);
+                    newObject->m_vecVertices.push_back(this->m_pMesh->normals[indexInfo->n * 3 + 1]);
+                    newObject->m_vecVertices.push_back(this->m_pMesh->normals[indexInfo->n * 3 + 2]);
                 }
             }
 
@@ -121,7 +124,9 @@ Renderable* Renderable::bindBuffers(std::string model) {
 
 void Renderable::renderBuffers() {
     this->m_matrix = glm::translate(glm::mat4(1.f), this->m_position);
-    //this->m_matrix = glm::rotate(this->m_matrix, glm::radians(45.f), this->m_rotation);
+    this->m_matrix = glm::rotate(this->m_matrix, glm::radians(this->m_rotation.x), glm::vec3(1.f,0.f,0.f));
+    this->m_matrix = glm::rotate(this->m_matrix, glm::radians(this->m_rotation.y), glm::vec3(0.f, 1.f, 0.f));
+    this->m_matrix = glm::rotate(this->m_matrix, glm::radians(this->m_rotation.z), glm::vec3(0.f, 0.f, 1.f));
     //this->m_matrix = glm::scale(this->m_matrix, this->m_scale);
 
     const auto iShaderProgram = RENDER()->getShaderProgram();
@@ -167,6 +172,16 @@ Renderable* Renderable::setRotation(glm::vec3 rot) {
 
 Renderable* Renderable::setScale(glm::vec3 scale) {
     this->m_scale = scale;
+    return this;
+}
+
+Renderable* Renderable::setModel(fastObjMesh* pMesh) {
+    this->m_pMesh = pMesh;
+    return this;
+}
+
+Renderable* Renderable::setModel(const char* szModelName) {
+    this->m_pMesh = RENDER()->getModel(szModelName);
     return this;
 }
 

@@ -9,6 +9,9 @@
 #include <SDL.h>
 #include <iostream>
 #include <vector>
+#include <map>
+#include <unordered_map>
+#include "fast_obj.h"
 
 struct SDL_Window;
 class TextEditor;
@@ -78,6 +81,8 @@ private:
 	 * Renderable objects.
 	 */
 	std::vector<Renderable*> m_vecRenderables;
+
+	std::unordered_map<const char*, fastObjMesh*> m_models;
 
 public:
 	/*
@@ -165,6 +170,16 @@ public:
 	 * Get the shader program ID.
 	 */
 	int getShaderProgram();
+
+	/*
+	 * Get a model by name.
+	 */
+	fastObjMesh* getModel(const char* name);
+	
+	/*
+	 * Add a model by name.
+	 */
+	void addModel(const char* name, fastObjMesh* pMesh);
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "Render.hpp"
 #include "Engine.hpp"
+#include "Chunk.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -26,6 +27,8 @@ std::string readFileIntoString(const std::string& filePath) {
 Render::Render(Engine* instance) : EngineModule(instance) {
 	this->m_sVertex = readFileIntoString("shaders/vertex.glsl");
 	this->m_sFragment = readFileIntoString("shaders/fragment.glsl");
+	this->m_iShaderProgram = (GLuint)(-1);
+	this->m_models = {};
 }
 
 Render::~Render() {}
@@ -78,7 +81,6 @@ void Render::run2d() {
 	SDL_GL_SetSwapInterval(1);
 
 	glEnable(GL_TEXTURE_3D);
-	//glBindTexture(GL_TEXTURE_2D, textureID);
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -87,25 +89,37 @@ void Render::run2d() {
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);  // Cull back faces
 
-	//glFrontFace(GL_CW);
-
 	this->m_engine->getMenu()->initOpenGL();
 
 	this->m_engine->getHooks()->callHooks("init_opengl");
 
 	this->m_iShaderProgram = this->m_engine->getShaders()->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
-	
-	for (size_t i = 0; i < 10; i++)
-	{
-		for (size_t j = 0; j < 10; j++) {
-			//this->m_vecRenderables.push_back((new Renderable)->setPosition(glm::vec3(-5.f + (float)i, -3.f, -5.f + (float)j))->bindBuffers());
-		}
-	}
-	//this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->bindBuffers(std::string("res/models/cube.obj")));
-	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,0.f })->bindBuffers(std::string("res/models/directions.obj")));
-	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->bindBuffers(std::string("res/models/plane.obj")));
-	//this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,1.f,0.f })->bindBuffers(std::string("res/models/teapot.obj")));
 
+	/* Load the models. */
+	this->addModel("cube", fast_obj_read("res/models/cube.obj"));
+	this->addModel("directions", fast_obj_read("res/models/directions.obj"));
+	this->addModel("plane", fast_obj_read("res/models/plane.obj"));
+	this->addModel("plane1", fast_obj_read("res/models/plane1.obj"));
+	this->addModel("teapot", fast_obj_read("res/models/teapot.obj"));
+
+	std::vector<Renderable*> vecRenderables;
+	vecRenderables.push_back((new Renderable)->setPosition({ 0.f,10.f,0.f })->setModel("directions"));
+
+	vecRenderables.push_back((new Renderable)->setPosition({ 0.f,1.f,0.f })->setModel("plane1"));
+	vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->setRotation(glm::vec3(180.f, 0.f, 0.f))->setModel("plane1"));
+	
+	vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,1.f })->setRotation(glm::vec3(90.f,0.f,0.f))->setModel("plane1"));
+	vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,-1.f })->setRotation(glm::vec3(-90.f, 0.f, 0.f))->setModel("plane1"));
+
+	vecRenderables.push_back((new Renderable)->setPosition({ 1.f,0.f,0.f })->setRotation(glm::vec3(0.f, 0.f, -90.f))->setModel("plane1"));
+	vecRenderables.push_back((new Renderable)->setPosition({ -1.f,0.f,0.f })->setRotation(glm::vec3(0.f, 0.f, 90.f))->setModel("plane1"));
+
+	for (const auto pRenderable : vecRenderables) {
+		this->m_vecRenderables.push_back(pRenderable->bindBuffers());
+	}
+
+	/*const auto chunk = new Chunk();
+	chunk->generateMesh()*/;
 
 	float u_zoom = 400.f;
 
@@ -198,6 +212,8 @@ void Render::run2d() {
 		for (const auto pRenderable : this->m_vecRenderables) {
 			pRenderable->renderBuffers();
 		}
+		
+		/*chunk->renderBuffers();*/
 
 		this->m_engine->getHooks()->callHooks("render");
 
@@ -284,4 +300,13 @@ std::string Render::getFragmentShaderCode() {
 
 int Render::getShaderProgram() {
 	return this->m_iShaderProgram;
+}
+
+fastObjMesh* Render::getModel(const char* name) {
+	auto got = this->m_models.find(name);
+	return got == this->m_models.end() ? nullptr : got->second;
+}
+
+void Render::addModel(const char* name, fastObjMesh* pMesh) {
+	this->m_models.insert({ name,pMesh });
 }

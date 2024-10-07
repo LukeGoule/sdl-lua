@@ -18,6 +18,8 @@ private:
 	glm::vec3 m_rotation = { 0.0f, 0.0f, 0.0f };
 	glm::vec3 m_scale = { 1.0f, 1.0f, 1.0f };
 
+public:
+
 	struct Object {
 		std::vector<float> m_vecVertices;
 		std::vector<unsigned int> m_vecIndices;
@@ -30,17 +32,21 @@ private:
 		const fastObjMaterial* m_pMaterial = nullptr;
 	};
 
+private:
+
 	std::vector<Renderable::Object*> m_vecObjects;
 
 	glm::mat4 m_matrix;
 
 	const char* m_szUUID;
 
+	fastObjMesh* m_pMesh;
+
 public:
 
-	Renderable();
+	Renderable(const char* szModel = nullptr);
 
-	Renderable* bindBuffers(std::string model = std::string("res/models/cube.obj"));
+	Renderable* bindBuffers();
 
 	void renderBuffers();
 
@@ -49,6 +55,9 @@ public:
 	Renderable* setRotation(glm::vec3 rot);
 
 	Renderable* setScale(glm::vec3 scale);
+
+	Renderable* setModel(fastObjMesh* pMesh);
+	Renderable* setModel(const char* szModelName);
 
 	glm::vec3 getPosition();
 

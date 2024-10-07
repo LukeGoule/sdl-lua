@@ -171,7 +171,9 @@
     <ClCompile Include="..\packages\Lua\lutf8lib.c" />
     <ClCompile Include="..\packages\Lua\lvm.c" />
     <ClCompile Include="..\packages\Lua\lzio.c" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="engine.Atan2.cpp" />
     <ClCompile Include="engine.BindTexture.cpp" />
     <ClCompile Include="engine.CheckKey.cpp" />
@@ -201,6 +203,7 @@
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Uniforms.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\packages\ImGuiColorTextEdit\TextEditor.h" />
@@ -240,7 +243,9 @@
     <ClInclude Include="..\packages\Lua\lvm.h" />
     <ClInclude Include="..\packages\Lua\lzio.h" />
     <ClInclude Include="BaseLuaModule.hpp" />
+    <ClInclude Include="Block.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Chunk.hpp" />
     <ClInclude Include="engine.Atan2.hpp" />
     <ClInclude Include="engine.BindTexture.hpp" />
     <ClInclude Include="engine.CheckKey.hpp" />
@@ -271,6 +276,7 @@
     <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="Uniforms.hpp" />
+    <ClInclude Include="World.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
