@@ -45,3 +45,5 @@
 2. Build as Debug x86.
 3. Add the `.dll` files from each of the (pre) compiled packages to the `runtime` folder.
 4. Run the application.
+
+Latest media @ https://www.youtube.com/watch?v=hD8r7T67eXI
