@@ -3,7 +3,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "Renderable.hpp"
 
 #include "../ImGuiColorTextEdit/TextEditor.h"
 
@@ -89,23 +88,50 @@ void Render::run2d() {
 
 	//glFrontFace(GL_CW);
 
+	// Vertices for a 3D square (two triangles) in the XY plane
+	GLfloat vertices[] = {
+		// Positions (x, y, z)
+		-0.5f, -0.5f,  0.0f,  // Bottom-left
+		 0.5f, -0.5f,  0.0f,  // Bottom-right
+		 0.5f,  0.5f,  0.0f,  // Top-right
+		-0.5f,  0.5f,  0.0f   // Top-left
+	};
+
+	// Indices for the two triangles that make up the square
+	GLuint indices[] = {
+		0, 1, 2,   // First triangle (bottom-left, bottom-right, top-right)
+		2, 3, 0    // Second triangle (top-right, top-left, bottom-left)
+	};
+
+	GLuint VBO, VAO, EBO;
+
+	// Generate VAO
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	// Generate VBO for the vertex data
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// Generate EBO for the indices
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// Set the vertex attribute pointers
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// Unbind VAO (not the EBO, it stays bound to the VAO)
+	glBindVertexArray(0);
+	
+
 	this->m_engine->getMenu()->initOpenGL();
 
 	this->m_engine->getHooks()->callHooks("init_opengl");
 
 	this->m_iShaderProgram = this->m_engine->getShaders()->compileShaderProgram(this->m_sVertex.c_str(), this->m_sFragment.c_str());
-	
-	for (size_t i = 0; i < 10; i++)
-	{
-		for (size_t j = 0; j < 10; j++) {
-			//this->m_vecRenderables.push_back((new Renderable)->setPosition(glm::vec3(-5.f + (float)i, -3.f, -5.f + (float)j))->bindBuffers());
-		}
-	}
-	//this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->bindBuffers(std::string("res/models/cube.obj")));
-	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,0.f,0.f })->bindBuffers(std::string("res/models/directions.obj")));
-	this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,-1.f,0.f })->bindBuffers(std::string("res/models/plane.obj")));
-	//this->m_vecRenderables.push_back((new Renderable)->setPosition({ 0.f,1.f,0.f })->bindBuffers(std::string("res/models/teapot.obj")));
-
 
 	float u_zoom = 400.f;
 
@@ -125,9 +151,13 @@ void Render::run2d() {
 		->addUniform(Uniforms::UniformType::MAT4, glm::value_ptr(projection), "m_mat4Projection");
 
 	UNIFORMS()
-		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPLow(), "m_fLowAmplitude")
-		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPMid(), "m_fMidAmplitude")
-		->addUniform(Uniforms::UniformType::FLOAT1, PORTAUDIO()->getPHigh(), "m_fHighAmplitude");
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[0]->m_fCurrentAmpSmoothed, "m_fFrequencies0")
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[1]->m_fCurrentAmpSmoothed, "m_fFrequencies1")
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[2]->m_fCurrentAmpSmoothed, "m_fFrequencies2")
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[3]->m_fCurrentAmpSmoothed, "m_fFrequencies3")
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[4]->m_fCurrentAmpSmoothed, "m_fFrequencies4")
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[5]->m_fCurrentAmpSmoothed, "m_fFrequencies5")
+		->addUniform(Uniforms::UniformType::FLOAT1, &PORTAUDIO()->getFrequencyBands()[6]->m_fCurrentAmpSmoothed, "m_fFrequencies6");
 
 	UNIFORMS()
 		->addUniform(Uniforms::UniformType::FLOAT3, glm::value_ptr(OPTIONS()->get()->m_lightPosition), "lightPos")
@@ -180,7 +210,7 @@ void Render::run2d() {
 
 		view = CAMERA()->getViewMatrix();
 
-		glClearColor(0.1f, 0.1f, 0.1f, 1.f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		glUseProgram(this->m_iShaderProgram);
@@ -195,9 +225,10 @@ void Render::run2d() {
 
 		this->m_engine->getUniforms()->setOpenGLUniforms(this->m_iShaderProgram);
 
-		for (const auto pRenderable : this->m_vecRenderables) {
-			pRenderable->renderBuffers();
-		}
+		// Bind the VAO and draw the square using element array (EBO)
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
 
 		this->m_engine->getHooks()->callHooks("render");
 

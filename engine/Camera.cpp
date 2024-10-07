@@ -6,7 +6,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 Camera::Camera(Engine* instance) : EngineModule(instance) {
-    this->position = glm::vec3(0.0f, 0.0f, 3.0f);
+    this->position = glm::vec3(0.0f, 0.0f, .5f);
     this->front = glm::vec3(0.0f, 0.0f, -1.0f);
     this->up = glm::vec3(0.0f, 1.0f, 0.0f);
     this->yaw =-90.0f;

@@ -19,7 +19,7 @@ void main() {
     FragPos = vec3(m_mat4Model * vec4(m_vec3InPosition, 1.0));
     
     // Pass the color to the fragment shader
-    m_vec3Colour = m_vec3InColour;
+    m_vec3Colour = vec3(1,1,1);
 
     // Pass the texcoord.
     m_vec3Texcoord = m_vec3Texcoord_in;

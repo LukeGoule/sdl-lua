@@ -184,7 +184,6 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="engine.SetDrawColour.cpp" />
     <ClCompile Include="engine.SetFullscreen.cpp" />
-    <ClCompile Include="fast_obj.cpp" />
     <ClCompile Include="hooks.Add.cpp" />
     <ClCompile Include="Hooks.cpp" />
     <ClCompile Include="IHasUUID.hpp" />
@@ -198,7 +197,6 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Portaudio.cpp" />
     <ClCompile Include="Render.cpp" />
-    <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Uniforms.cpp" />
   </ItemGroup>
@@ -253,7 +251,6 @@
     <ClInclude Include="engine.SetDrawColour.hpp" />
     <ClInclude Include="engine.SetFullscreen.hpp" />
     <ClInclude Include="engine.LaunchWindow.hpp" />
-    <ClInclude Include="fast_obj.h" />
     <ClInclude Include="hooks.Add.hpp" />
     <ClInclude Include="Hooks.hpp" />
     <ClInclude Include="imgui.Begin.hpp" />
@@ -267,7 +264,6 @@
     <ClInclude Include="Options.hpp" />
     <ClInclude Include="Portaudio.hpp" />
     <ClInclude Include="Render.hpp" />
-    <ClInclude Include="Renderable.hpp" />
     <ClInclude Include="Shaders.hpp" />
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="Uniforms.hpp" />

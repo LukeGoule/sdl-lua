@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <sstream>
 
 #include "Menu.hpp"
 #include "Engine.hpp"
@@ -53,7 +54,7 @@ void Menu::render() {
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::SetNextWindowSize(ImVec2(350, 200));
+	//ImGui::SetNextWindowSize(ImVec2(350, 200));
 	ImGui::Begin("App");
 	{
 		double audioLoad = Pa_GetStreamCpuLoad(this->m_engine->getPortaudio()->getPaStream());
@@ -68,17 +69,68 @@ void Menu::render() {
 			}
 		};
 
-		ImGui::PlotLines("Low", Funcs::Get, pEngine->getPortaudio()->getLowHistory(), 70, 0, NULL, 0.f, 1.f);
-		ImGui::PlotLines("Mid", Funcs::Get, pEngine->getPortaudio()->getMidHistory(), 70, 0, NULL, 0.f, 1.f);
-		ImGui::PlotLines("High", Funcs::Get, pEngine->getPortaudio()->getHighHistory(), 70, 0, NULL, 0.f, 1.f);
+		if (ImGui::TreeNode("Show unsmoothed values")) {
+			for (const auto fBand : PORTAUDIO()->getFrequencyBands())
+			{
+				std::stringstream val;
+				val << fBand->m_name << " ";
+				val << fBand->m_fCurrentAmp;
 
-		if (ImGui::Button("Compile")) {
-			this->m_engine->getRender()->recompileShaders();
+				ImGui::PlotLines(fBand->m_name.c_str(), Funcs::Get, fBand->m_pAmpHistory, PORTAUDIO_HISTORY_LENGTH, 0, val.str().c_str(), 0.f, 6.f, ImVec2(-1.f, 50.f));
+			}
+
+			ImGui::TreePop();
 		}
 
-		;
+		if (ImGui::TreeNode("Show smoothed values")) {
+			for (const auto fBand : PORTAUDIO()->getFrequencyBands())
+			{
+				std::stringstream val;
+				val << fBand->m_name << " ";
+				val << fBand->m_fCurrentAmpSmoothed;
+
+				ImGui::PlotLines(fBand->m_name.c_str(), Funcs::Get, fBand->m_pAmpHistorySmooth, PORTAUDIO_HISTORY_LENGTH, 0, val.str().c_str(), 0.f, 6.f, ImVec2(-1.f, 50.f));
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Select a device"))
+		{
+			static int selected = 0;
+			int n = 0;
+			for (const auto pDevice : PORTAUDIO()->getDevices())
+			{
+				bool isSelected = selected == n;
+				
+				if (ImGui::Selectable(pDevice->m_name.c_str(), &isSelected)) {
+					selected = n;
+					PORTAUDIO()->selectDevice(n);
+				}
+
+				n++;
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::SliderFloat("Smoothing", &OPTIONS()->get()->m_fSmoothFactor, 0.01f, 1.0f, "%.3f");
+		
+		if (ImGui::Button("Load devices")) {
+			PORTAUDIO()->enumerateDevices();
+		}
+
+		if (ImGui::Button("Clear data")) {
+			PORTAUDIO()->clearHistories();
+		}
+
+		if (ImGui::Button("Compile")) {
+			RENDER()->recompileShaders();
+		}
 	}
 	ImGui::End();
+
+	//ImGui::ShowDemoWindow();
 
 	ImGui::SetNextWindowSize(ImVec2(500, 350));
 	ImGui::Begin("Vertex Shader");

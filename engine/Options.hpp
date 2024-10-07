@@ -26,6 +26,8 @@ private:
 
 		float m_fFOV = 45.f;
 
+		float m_fSmoothFactor = 0.450f;
+
 		glm::vec3 m_vecViewpos = glm::vec3(0.0f, 0.0f, -3.0f);
 		glm::vec3 m_vecViewrot = glm::vec3(0.f, 0.f, 0.f);
 		glm::vec3 m_lightPosition = glm::vec3(1.f, 1.f, 1.f);
